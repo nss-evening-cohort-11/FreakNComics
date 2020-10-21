@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\laptop\\source\\repos\\FreakNComics\\FreakNComics\\FreakNComics.csproj": {}
+    "C:\\Users\\John Fleming\\source\\repos\\nss-e11\\projects\\group\\FreakNComics\\FreakNComics\\FreakNComics.csproj": {}
   },
   "projects": {
-    "C:\\Users\\laptop\\source\\repos\\FreakNComics\\FreakNComics\\FreakNComics.csproj": {
+    "C:\\Users\\John Fleming\\source\\repos\\nss-e11\\projects\\group\\FreakNComics\\FreakNComics\\FreakNComics.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\laptop\\source\\repos\\FreakNComics\\FreakNComics\\FreakNComics.csproj",
+        "projectUniqueName": "C:\\Users\\John Fleming\\source\\repos\\nss-e11\\projects\\group\\FreakNComics\\FreakNComics\\FreakNComics.csproj",
         "projectName": "FreakNComics",
-        "projectPath": "C:\\Users\\laptop\\source\\repos\\FreakNComics\\FreakNComics\\FreakNComics.csproj",
-        "packagesPath": "C:\\Users\\laptop\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\laptop\\source\\repos\\FreakNComics\\FreakNComics\\obj\\",
+        "projectPath": "C:\\Users\\John Fleming\\source\\repos\\nss-e11\\projects\\group\\FreakNComics\\FreakNComics\\FreakNComics.csproj",
+        "packagesPath": "C:\\Users\\John Fleming\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\John Fleming\\source\\repos\\nss-e11\\projects\\group\\FreakNComics\\FreakNComics\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\John Fleming\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
