@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "xIJyJoZiK95gHOwKgQHEKN49jd2oHjTI1L7Jk+vNKvDFQyhBJA3g7U6dUsoQvW/SRNVHgvrKYIAH0lTEeIZ1PA==",
+  "dgSpecHash": "Djc/Nkdba/OK4RMeyVds7ctemWTb0USdJ/WZPWc6H0DBSki4Ew4XkGL3s3mIqjTHqSZx/Z/K7NOepNh7sTV6lg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\laptop\\source\\repos\\FreakNComics\\FreakNComics\\FreakNComics.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\16155\\source\\repos\\FreakNComics\\FreakNComics\\FreakNComics.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\16155\\.nuget\\packages\\dapper\\2.0.35\\dapper.2.0.35.nupkg.sha512",
+    "C:\\Users\\16155\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }
