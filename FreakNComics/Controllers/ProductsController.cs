@@ -45,8 +45,11 @@ namespace FreakNComics.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult CreateProduct(Products product)
         {
+            _repo.Add(product);
+
+            return Created($"/api/products/{product.ProductId}", product);
         }
 
         // PUT api/<ProductController>/5

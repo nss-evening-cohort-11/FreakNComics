@@ -17,17 +17,17 @@ namespace FreakNComics.Data
 
         public void Add(Products productToAdd)
         {
-            var sql = @"INSERT INTO [dbo].[Products]
-                               ,[ProductTypeId]
+            var sql = @"INSERT INTO [dbo].[Product]
+                               ([ProductTypeId]
                                ,[Title]
                                ,[Description]
                                ,[Quantity]
                                ,[Price]
                                ,[imageUrl]
                                ,[inStock])
-                               Output inserted.id
+                               Output inserted.ProductId
                             VALUES
-                                (@productTypeId,@title,@desc,@qty,@price,@imgurl,@instock)";
+                                (@productTypeId,@title,@description,@quantity,@price,@imageUrl,@inStock)";
 
             using var db = new SqlConnection(_connectionString);
 
@@ -59,6 +59,8 @@ namespace FreakNComics.Data
 
             return products;
         }
+
+        public 
 
 
 
