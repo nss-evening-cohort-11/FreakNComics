@@ -13,7 +13,7 @@ namespace FreakNComics.Controllers
     public class UsersController : ControllerBase
     {
         UsersRepository _repo;
-        
+
         public UsersController()
         {
             _repo = new UsersRepository();
@@ -24,6 +24,15 @@ namespace FreakNComics.Controllers
         {
             var allUsers = _repo.GetAll();
             return Ok(allUsers);
+        }
+
+        [HttpGet("{userId}")]
+        public IActionResult GetUserById(int userId)
+        {
+            var singleUser = _repo.GetById(userId);
+            if (singleUser == null) return NotFound("No user with that ID was found");
+
+            return Ok(singleUser);
         }
     }
 }

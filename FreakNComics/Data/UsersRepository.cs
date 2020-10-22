@@ -21,5 +21,19 @@ namespace FreakNComics.Data
 
             return users;
         }
+
+        public User GetById(int userId)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sql = @"select *
+                        from users
+                        where id = @uid";
+
+            var parameters = new { uid = userId };
+
+            var singleUser = db.QueryFirstOrDefault<User>(sql, parameters);
+            return singleUser;
+        }
     }
 }
