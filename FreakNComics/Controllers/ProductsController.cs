@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FreakNComics.Data;
+using FreakNComics.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,18 +14,33 @@ namespace FreakNComics.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+
+        ProductsRepository _repo;
+
+        public ProductsController()
+        {
+            _repo = new ProductsRepository();
+        }
+
+
         // GET: api/<ProductController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult GetAllProducts()
         {
-            return new string[] { "value1", "value2" };
+            var allProducts = _repo.GetAll();
+
+            return Ok(allProducts);
         }
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetProductById(int id)
         {
-            return "value";
+            var product = _repo.GetById(id);
+
+            if (product == null) return NotFound("No Product With That Id Was Found..");
+
+            return Ok(product);
         }
 
         // POST api/<ProductController>
