@@ -35,5 +35,28 @@ namespace FreakNComics.Data
             var singleUser = db.QueryFirstOrDefault<User>(sql, parameters);
             return singleUser;
         }
+
+        public void AddUser(User userToAdd)
+        {
+            using var db = new SqlConnection(_connectionString);
+            
+            var sql = @"INSERT INTO [dbo].[Users]
+                               ([FirstName]
+                               ,[LastName]
+                               ,[Email]
+                               ,[Phone]
+                               ,[StreetAddress]
+                               ,[City]
+                               ,[State]
+                               ,[ZipCode]
+                               ,[DateCreated])
+	                    Output inserted.id
+                        VALUES
+                                (@firstname,@lastname,@email,@phone,@streetaddress,@city,@state,@zipcode,@datecreated)";
+
+            var newId = db.ExecuteScalar<int>(sql, userToAdd);
+
+            userToAdd.Id = newId;
+        }
     }
 }

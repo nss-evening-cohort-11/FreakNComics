@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FreakNComics.Data;
+using FreakNComics.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,13 @@ namespace FreakNComics.Controllers
             if (singleUser == null) return NotFound("No user with that ID was found");
 
             return Ok(singleUser);
+        }
+
+        [HttpPost]
+        public IActionResult AddNewUser(User userToAdd)
+        {
+            _repo.AddUser(userToAdd);
+            return Created($"/ api / users /{ userToAdd.Id}", userToAdd);
         }
     }
 }
