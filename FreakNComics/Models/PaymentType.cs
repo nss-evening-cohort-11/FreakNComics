@@ -8,6 +8,6 @@ namespace FreakNComics.Models
         public int PaymentTypeId { get; set; }
         public string Type { get; set; }
         public int UserId { get; set; }
-        public int AccountNumber { get; set; }
+        public long AccountNumber { get; set; }
     }
 }

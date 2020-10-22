@@ -2,46 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FreakNComics.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using FreakNComics.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FreakNComics.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/PaymentType")]
     [ApiController]
     public class PaymentTypeController : ControllerBase
     {
+        PaymentTypeRepository _repo;
+
+        public PaymentTypeController()
+        {
+            _repo = new PaymentTypeRepository();
+        }
         // GET: api/<PaymentTypeController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var allPaymentTypes = _repo.GetAllPaymentTypes();
+
+            return Ok(allPaymentTypes);
         }
 
         // GET api/<PaymentTypeController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetById(int id)
         {
-            return "value";
+            var paymentType = _repo.GetByPaymentTypeId(id);
+
+            if (paymentType == null) return NotFound("No Payment Type with that Id was found");
+
+            return Ok(paymentType);
         }
 
         // POST api/<PaymentTypeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult AddPaymentType(PaymentType paymentType)
         {
+            _repo.Add(paymentType);
+
+            return Created($"/api/paymentType/{paymentType.PaymentTypeId}", paymentType);
         }
 
-        // PUT api/<PaymentTypeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //    // PUT api/<PaymentTypeController>/5
+        //    [HttpPut("{id}")]
+        //    public void Put(int id, [FromBody] string value)
+        //    {
+        //    }
 
-        // DELETE api/<PaymentTypeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //    // DELETE api/<PaymentTypeController>/5
+        //    [HttpDelete("{id}")]
+        //    public void Delete(int id)
+        //    {
+        //    }
     }
 }
