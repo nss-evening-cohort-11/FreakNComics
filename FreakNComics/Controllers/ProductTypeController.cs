@@ -48,7 +48,7 @@ namespace FreakNComics.Controllers
         {
             _repo.Add(productType);
 
-            return Created($"/api/producttype/{productType.ProductypeId}", productType);
+            return Created($"/api/producttype/{productType.ProductTypeId}", productType);
         }
 
         // PUT api/<ProductTypeController>/5

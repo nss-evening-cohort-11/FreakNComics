@@ -7,7 +7,7 @@ namespace FreakNComics.Models
 {
     public class ProductType
     {
-        public int ProductypeId { get; set; }
+        public int ProductTypeId { get; set; }
         public string Category { get; set; }
     }
 }

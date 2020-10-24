@@ -26,7 +26,7 @@ namespace FreakNComics.Data
 
             var newId = db.ExecuteScalar<int>(sql, typeToAdd);
 
-            typeToAdd.ProductypeId = newId;
+            typeToAdd.ProductTypeId = newId;
         }
 
         public List<ProductType> GetAll()
