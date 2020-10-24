@@ -38,6 +38,20 @@ namespace FreakNComics.Data
             return order;
         }
 
+        public List<LineItem> GetLineItems(int id)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @$"select *
+                           from LineItem
+                           where PurchaseOrderId = @Id";
+            var parameters = new { Id = id };
+
+            var items = db.Query<LineItem>(query, parameters);
+
+            return items.ToList();
+        }
+
         public void Add(PurchaseOrder orderToAdd)
         {
             var sql = @"INSERT INTO [dbo].[PurchaseOrder]
@@ -55,6 +69,26 @@ namespace FreakNComics.Data
             var newId = db.ExecuteScalar<int>(sql, orderToAdd);
 
             orderToAdd.PurchaseOrderId = newId;
+        }
+
+        public void AddItem(int id, LineItem itemToAdd)
+        {
+            itemToAdd.PurchaseOrderId = id;
+
+            var sql = @"INSERT INTO [dbo].[LineItem]
+                       ([PurchaseOrderId]
+                       ,[ProductId]
+                       ,[UnitPrice]
+                       ,[LineItemQuantity])
+	             Output inserted.LineItemId
+                 VALUES
+                       (@purchaseOrderId, @productId, @unitPrice, @lineItemQuantity)";
+
+            using var db = new SqlConnection(_connectionString);
+
+            var newId = db.ExecuteScalar<int>(sql, itemToAdd);
+
+            itemToAdd.LineItemId = newId;
         }
 
         public PurchaseOrder Update(int id, PurchaseOrder order)
