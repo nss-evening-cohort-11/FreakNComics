@@ -86,11 +86,11 @@ namespace FreakNComics.Data
         public void Remove(int purchaseOrderId)
         {
             var sql = @"UPDATE [dbo].[PurchaseOrder]
-                        SET [IsComplete] = true
+                        SET [IsComplete] = @iscomplete
                         WHERE PurchaseOrderId = @id";
             using var db = new SqlConnection(_connectionString);
 
-            db.QueryFirstOrDefault(sql, new { id = purchaseOrderId });
+            db.QueryFirstOrDefault(sql, new { id = purchaseOrderId, iscomplete = true });
 
         }
     }
