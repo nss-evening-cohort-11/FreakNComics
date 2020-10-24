@@ -52,5 +52,29 @@ namespace FreakNComics.Data
 
             return paymentType;
         }
+        public PaymentType UpdatePaymentType(int id, PaymentType paymentType)
+        {
+            var sql = @"UPDATE [dbo].[PaymentType]
+                        SET  [Type] = @type
+                            ,[UserId] = @userid
+                            ,[AccountNumber] = @accountnumber
+                        Output inserted.*
+                        WHERE PaymentTypeId = @id";
+
+            using var db = new SqlConnection(_connectionString);
+
+            var parameters = new
+            {
+                paymentType.PaymentTypeId,
+                paymentType.Type,
+                paymentType.UserId,
+                paymentType.AccountNumber,
+                id
+            };
+
+            var updatedPaymentType = db.QueryFirstOrDefault<PaymentType>(sql, parameters);
+
+            return updatedPaymentType;
+        }
     }
 }

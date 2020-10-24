@@ -50,13 +50,23 @@ namespace FreakNComics.Controllers
             return Created($"/api/paymentType/{paymentType.PaymentTypeId}", paymentType);
         }
 
-        //    // PUT api/<PaymentTypeController>/5
-        //    [HttpPut("{id}")]
-        //    public void Put(int id, [FromBody] string value)
-        //    {
-        //    }
+        // PUT api/<PaymentTypeController>/5
+        [HttpPut("{id}")]
+      
+        public IActionResult UpdatePaymentType(int id, PaymentType paymentType)
+        {
+            if (_repo.GetByPaymentTypeId(id) == null)
+            {
+                return NotFound();
+            }
 
-        //    // DELETE api/<PaymentTypeController>/5
+            var updatedPaymentType = _repo.UpdatePaymentType(id, paymentType);
+
+            return Ok(updatedPaymentType);
+
+        }
+
+        //    // DELETE api/PaymentType/5
         //    [HttpDelete("{id}")]
         //    public void Delete(int id)
         //    {
