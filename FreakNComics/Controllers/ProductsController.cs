@@ -63,8 +63,16 @@ namespace FreakNComics.Controllers
 
         // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult DeleteProduct(int id)
         {
+            if(_repo.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            _repo.Remove(id);
+
+            return Ok();
         }
+        
     }
 }

@@ -93,6 +93,17 @@ namespace FreakNComics.Data
 
         }
 
+        public void Remove(int productsId)
+        {
+            var sql = @"DELETE
+                        FROM [dbo].[Product]
+                        WHERE ProductId = @productid";
+
+            using var db = new SqlConnection(_connectionString);
+
+            db.Execute(sql, new { productid = productsId });
+        }
+
 
 
     }
