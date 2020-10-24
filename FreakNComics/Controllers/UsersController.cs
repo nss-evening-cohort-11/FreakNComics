@@ -54,5 +54,13 @@ namespace FreakNComics.Controllers
             _repo.Remove(userId);
             return Ok();
         }
+
+        [HttpPut("{userId}")]
+        public IActionResult UpdateUser(int userId, User userToUpdate)
+        {
+            var updatedUser = _repo.Update(userId, userToUpdate);
+
+            return Ok(updatedUser);
+        }
     }
 }

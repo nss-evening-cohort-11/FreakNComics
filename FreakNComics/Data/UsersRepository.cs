@@ -69,5 +69,41 @@ namespace FreakNComics.Data
 
             db.Execute(sql, new { id = userId });
         }
+
+        public User Update(int id, User userToUpdate)
+        {
+            var sql = @"UPDATE [dbo].[Users]
+                           SET [FirstName] = @firstName
+                              ,[LastName] = @lastName
+                              ,[Email] = @email
+                              ,[Phone] = @phone
+                              ,[StreetAddress] = @streetAddress
+                              ,[City] = @city
+                              ,[State] = @state
+                              ,[ZipCode] = @zipCode
+                              ,[DateCreated] = @dateCreated
+                         OUTPUT inserted.*
+                         WHERE id = @id";
+
+            using var db = new SqlConnection(_connectionString);
+
+            var parameters = new
+            {
+                userToUpdate.FirstName,
+                userToUpdate.LastName,
+                userToUpdate.Email,
+                userToUpdate.Phone,
+                userToUpdate.StreetAddress,
+                userToUpdate.City,
+                userToUpdate.State,
+                userToUpdate.ZipCode,
+                userToUpdate.DateCreated,
+                id
+            };
+
+            var updatedUser = db.QueryFirstOrDefault<User>(sql, parameters);
+
+            return updatedUser;
+        }
     }
 }
