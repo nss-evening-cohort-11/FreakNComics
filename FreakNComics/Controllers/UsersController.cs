@@ -42,5 +42,17 @@ namespace FreakNComics.Controllers
             _repo.AddUser(userToAdd);
             return Created($"/ api / users /{ userToAdd.Id}", userToAdd);
         }
+
+        [HttpDelete("{userId}")]
+        public IActionResult DeleteUser(int userId)
+        {
+            if (_repo.GetById(userId) == null)
+            {
+                NotFound();
+            }
+
+            _repo.Remove(userId);
+            return Ok();
+        }
     }
 }

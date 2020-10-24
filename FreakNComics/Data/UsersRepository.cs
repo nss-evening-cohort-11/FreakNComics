@@ -58,5 +58,16 @@ namespace FreakNComics.Data
 
             userToAdd.Id = newId;
         }
+
+        public void Remove(int userId)
+        {
+            var sql = @"DELETE 
+                        FROM [dbo].[Users]
+                        WHERE Id = @id";
+
+            using var db = new SqlConnection(_connectionString);
+
+            db.Execute(sql, new { id = userId });
+        }
     }
 }
