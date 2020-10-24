@@ -54,8 +54,11 @@ namespace FreakNComics.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult UpdatedProducts(int id, Products products)
         {
+            var updatedProducts = _repo.Update(id, products);
+
+            return Ok(updatedProducts);
         }
 
         // DELETE api/<ProductController>/5

@@ -60,7 +60,38 @@ namespace FreakNComics.Data
             return products;
         }
 
-        public 
+        public Products Update(int id, Products products)
+        {
+            var sql = @"UPDATE [dbo].[Product]
+                            SET [ProductTypeId] = @productTypeId
+                               ,[Title] = @title
+                               ,[Description] = @description
+                               ,[Quantity] = @quantity
+                               ,[Price] = @price
+                               ,[imageUrl] = @imageUrl
+                               ,[inStock] = @inStock
+                            output inserted.*
+                            WHERE ProductId = @productId";
+            using var db = new SqlConnection(_connectionString);
+
+
+            var parameters = new
+            {
+                ProductTypeId = products.ProductTypeId,
+                Title = products.Title,
+                Description = products.Description,
+                Quantity = products.Quantity,
+                Price = products.Price,
+                imageUrl = products.imageUrl,
+                inStock = products.inStock,
+                ProductId = id
+            };
+
+            var updatedProducts = db.QueryFirstOrDefault<Products>(sql, parameters);
+
+            return updatedProducts;
+
+        }
 
 
 
