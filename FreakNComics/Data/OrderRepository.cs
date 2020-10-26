@@ -89,6 +89,37 @@ namespace FreakNComics.Data
             var newId = db.ExecuteScalar<int>(sql, itemToAdd);
 
             itemToAdd.LineItemId = newId;
+
+            var getLineItems = @"select *
+                                from LineItem
+                                where PurchaseOrderId = @purchaseOrderId";
+
+            var parameters = new
+            {
+                itemToAdd.PurchaseOrderId
+            };
+
+            var updatePurchaseOrder = db.Query<LineItem>(getLineItems, parameters).ToList();
+
+            decimal total = 0;
+
+            updatePurchaseOrder.ForEach((Item) => {
+                total += Item.UnitPrice * Item.LineItemQuantity;
+            });
+
+            var updateOrder = @"UPDATE [dbo].[PurchaseOrder]
+                                SET [Total] = @total
+                                Output inserted.*
+                                WHERE PurchaseOrderId = @purchaseOrderId";
+
+            var newParams = new
+            {
+                total,
+                itemToAdd.PurchaseOrderId
+            };
+
+            var totalPurchaseOrder = db.Query<LineItem>(updateOrder, newParams);
+
         }
 
         public PurchaseOrder Update(int id, PurchaseOrder order)
