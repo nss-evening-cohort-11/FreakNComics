@@ -44,6 +44,25 @@ namespace FreakNComics.Controllers
             return Ok(order);
         }
 
+        [HttpGet("{id}/items")]
+        public IActionResult GetOrderItems(int id)
+        {
+            var items = _repo.GetLineItems(id);
+
+            if (items == null) return NotFound();
+
+            return Ok(items);
+        }
+
+        [HttpPost("{id}/items")]
+        public IActionResult CreateLineItem(int id, LineItem item)
+        {
+            _repo.AddItem(id, item);
+
+            return Created($"/api/orders/{id}/items/{item.LineItemId}", item);
+
+        }
+
         [HttpPut("{id}")]
         public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
         {
