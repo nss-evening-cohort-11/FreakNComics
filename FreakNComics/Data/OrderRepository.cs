@@ -11,8 +11,6 @@ namespace FreakNComics.Data
 {
     public class OrderRepository
     {
-        static List<PurchaseOrder> _purchaseOrders = new List<PurchaseOrder>();
-
         const string _connectionString = "Server=localhost;Database=FreakNComics;Trusted_Connection=True;";
 
         public List<PurchaseOrder> GetPurchaseOrders()
