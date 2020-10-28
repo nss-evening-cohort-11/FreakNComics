@@ -52,6 +52,23 @@ namespace FreakNComics.Data
             return items.ToList();
         }
 
+        public LineItem GetLineItemById(int purchaseOrderId, int id)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @$"select * 
+                           from LineItem
+                           where LineItemId = @Id and PurchaseOrderId = @PurchaseOrderId";
+            var parameters = new {
+                Id = id,
+                PurchaseOrderId = purchaseOrderId
+            };
+
+            var item = db.QueryFirstOrDefault<LineItem>(query, parameters);
+
+            return item;
+        }
+
         public void Add(PurchaseOrder orderToAdd)
         {
             var sql = @"INSERT INTO [dbo].[PurchaseOrder]
@@ -157,6 +174,30 @@ namespace FreakNComics.Data
 
             db.QueryFirstOrDefault(sql, new { id = purchaseOrderId, iscomplete = true });
 
+        }
+
+        public void RemoveLineItem(int id, int itemId)
+        {
+            var check = @"select *
+                          from PurchaseOrder
+                          where PurchaseOrderId = @Id";
+
+            using var db = new SqlConnection(_connectionString);
+
+            var param = new
+            {
+                Id = id,
+            };
+
+            var completionCheck = db.Query<PurchaseOrder>(check, param);
+
+            if (completionCheck.FirstOrDefault().IsComplete == true) return;
+
+            var sql = @"DELETE FROM [dbo].[LineItem]
+                        WHERE LineItemId = @ItemId and PurchaseOrderId = @Id";
+
+
+            db.QueryFirstOrDefault(sql, new { Id = id, ItemId = itemId });
         }
     }
 }

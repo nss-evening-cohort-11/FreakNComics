@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using FreakNComics.Models;
 using FreakNComics.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 
 namespace FreakNComics.Controllers
 {
@@ -54,13 +56,45 @@ namespace FreakNComics.Controllers
             return Ok(items);
         }
 
+        [HttpGet("{id}/items/{itemId}")]
+        public IActionResult GetSingleItem(int id, int itemId)
+        {
+            var item = _repo.GetLineItemById(id, itemId);
+
+            if (item == null) return NotFound();
+
+            return Ok(item);
+        }
+
+        [HttpDelete("{id}/items/{itemId}")]
+        public IActionResult DeleteLineItem(int id, int itemId)
+        {
+            if (_repo.GetLineItemById(id, itemId) == null)
+            {
+                return NotFound();
+            }
+
+            _repo.RemoveLineItem(id, itemId);
+
+            return Ok();
+        }
+
         [HttpPost("{id}/items")]
         public IActionResult CreateLineItem(int id, LineItem item)
         {
+            var items = _repo.GetLineItems(id).ToArray();
+
+            for (int i = 0; i < items.Count(); i++)
+            {
+                if (items[i].ProductId == item.ProductId)
+                    {
+                    return Unauthorized("Product already in cart");
+                    }
+            }
+
             _repo.AddItem(id, item);
 
             return Created($"/api/orders/{id}/items/{item.LineItemId}", item);
-
         }
 
         [HttpPut("{id}")]
