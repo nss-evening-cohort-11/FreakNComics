@@ -139,6 +139,30 @@ namespace FreakNComics.Data
 
         }
 
+        public LineItem UpdateLineItem(int id, int itemId, LineItem item)
+        {
+            var sql = @"UPDATE [dbo].[LineItem]
+                       SET [ProductId] = @productId
+                          ,[UnitPrice] = @unitPrice
+                          ,[LineItemQuantity] = @lineItemQuantity
+                       WHERE PurchaseOrderId = @Id and LineItemId = @ItemId";
+
+            var param = new
+            {
+                item.ProductId,
+                item.UnitPrice,
+                item.LineItemQuantity,
+                Id = id,
+                ItemId = itemId
+            };
+
+            using var db = new SqlConnection(_connectionString);
+
+            var updatedLineItem = db.QueryFirstOrDefault(sql, param);
+
+            return null;
+        }
+
         public PurchaseOrder Update(int id, PurchaseOrder order)
         {
             var sql = @"UPDATE [dbo].[PurchaseOrder]
@@ -176,7 +200,7 @@ namespace FreakNComics.Data
 
         }
 
-        public void RemoveLineItem(int id, int itemId)
+        public bool RemoveLineItem(int id, int itemId)
         {
             var check = @"select *
                           from PurchaseOrder
@@ -191,13 +215,15 @@ namespace FreakNComics.Data
 
             var completionCheck = db.Query<PurchaseOrder>(check, param);
 
-            if (completionCheck.FirstOrDefault().IsComplete == true) return;
+            if (completionCheck.FirstOrDefault().IsComplete == true) return true;
 
             var sql = @"DELETE FROM [dbo].[LineItem]
                         WHERE LineItemId = @ItemId and PurchaseOrderId = @Id";
 
 
             db.QueryFirstOrDefault(sql, new { Id = id, ItemId = itemId });
+
+            return false;
         }
     }
 }

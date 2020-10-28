@@ -66,6 +66,16 @@ namespace FreakNComics.Controllers
             return Ok(item);
         }
 
+        [HttpPut("{id}/items/{itemId}")]
+        public IActionResult UpdateSingleItem(int id, int itemId, LineItem item)
+        {
+            if (_repo.GetLineItemById(id, itemId) == null) return NotFound();
+
+            var updatedLineItem = _repo.UpdateLineItem(id, itemId, item);
+
+            return Ok(updatedLineItem);
+        }
+
         [HttpDelete("{id}/items/{itemId}")]
         public IActionResult DeleteLineItem(int id, int itemId)
         {
@@ -74,7 +84,12 @@ namespace FreakNComics.Controllers
                 return NotFound();
             }
 
-            _repo.RemoveLineItem(id, itemId);
+            var isComplete = _repo.RemoveLineItem(id, itemId);
+            
+            if (isComplete == true)
+            {
+                return Unauthorized("Order is already completed");
+            }
 
             return Ok();
         }
