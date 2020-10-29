@@ -6,4 +6,5 @@ const getAllProductTypes = () => new Promise((resolve, reject) => {
     .then((response) => resolve(response.data))
     .catch((err) => reject(err));
 });
-export default getAllProductTypes;
+// eslint-disable-next-line import/no-anonymous-default-export
+export default { getAllProductTypes };
