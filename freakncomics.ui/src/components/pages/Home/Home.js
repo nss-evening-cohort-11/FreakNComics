@@ -22,8 +22,10 @@ class Home extends React.Component {
     ));
     return (
       <>
-        <h3> Latest Available Products </h3>
+      <h3> Latest Available Products </h3>
+      <div className="LatestProducts d-flex flex-wrap justify-content-around">
        {buildLatestProductList}
+      </div>
       </>
     );
   }

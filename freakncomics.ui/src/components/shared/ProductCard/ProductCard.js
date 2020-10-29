@@ -13,9 +13,9 @@ class ProductCard extends React.Component {
     const { product } = this.props;
 
     return (
-      <div className="ProductCard col-4">
-      <div className="card mb-2 mt-2">
-        <div className="card-body">
+      <div className="ProductCard">
+      <div className="card d-flex flex-wrap">
+        <div className="card-body justify-content-around">
           <h3 className="card-title">{product.title}</h3>
           <img className="card-img" alt="This is an image of the product" src={product.imageUrl} />
           {/* <Link className="view-single-product-button btn btn dark" to={singleProductLink}> Product Details  <i className="fas fa-eye"></i> </Link>  */}
