@@ -14,13 +14,9 @@ class Home extends React.Component {
   }
 
   render() {
-    const { products } = this.state;
-
-    const showProducts = products.map((product) => <p>{product.title}</p>);
-
     return (
       <div className="Home">
-        {showProducts}
+        hey home component
       </div>
     );
   }

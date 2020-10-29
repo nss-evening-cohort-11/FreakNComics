@@ -7,4 +7,10 @@ const getAllProducts = () => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default getAllProducts;
+const getSingleProduct = (productId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/products/${productId}`)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+export default {getAllProducts, getSingleProduct}; // eslint-disable-line
