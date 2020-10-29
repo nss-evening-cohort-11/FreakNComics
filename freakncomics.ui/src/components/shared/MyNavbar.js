@@ -2,6 +2,12 @@ import React from 'react';
 import './MyNavbar.scss';
 
 class MyNavbar extends React.Component {
+  submitKeyPress(e) {
+    if (e.key === 'Enter') {
+      console.log('IT WORKED!!!');
+    }
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,7 +29,7 @@ class MyNavbar extends React.Component {
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"></input>
+      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onKeyPress={this.submitKeyPress}></input>
       </form>
       </div>
     </nav>
