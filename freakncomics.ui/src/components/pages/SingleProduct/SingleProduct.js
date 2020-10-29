@@ -5,7 +5,7 @@ class SingleProduct extends React.Component {
   render() {
     return (
       <div className="SingleProduct">
-        <p> Hello SingleProduct Component </p>
+        <p> </p>
       </div>
     );
   }
