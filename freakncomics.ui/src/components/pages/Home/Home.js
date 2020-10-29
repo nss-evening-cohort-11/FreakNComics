@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductCategoriesCollapse from '../../Shared/ProductCategoriesCollapse/ProductCategoriesCollapse';
 import './Home.scss';
 
 class Home extends React.Component {
@@ -6,6 +7,7 @@ class Home extends React.Component {
     return (
       <div className="Home">
         <p> Hello Home Component </p>
+        <ProductCategoriesCollapse/>
       </div>
     );
   }
