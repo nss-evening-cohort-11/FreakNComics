@@ -6,4 +6,4 @@ const getAllProducts = () => new Promise((resolve, reject) => {
     .then((response) => resolve(response.data))
     .catch((err) => reject(err));
 });
-export default { getAllProducts };
+export default {getAllProducts}; //eslint-disable-line
