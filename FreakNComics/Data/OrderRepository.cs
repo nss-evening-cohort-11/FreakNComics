@@ -11,8 +11,6 @@ namespace FreakNComics.Data
 {
     public class OrderRepository
     {
-        static List<PurchaseOrder> _purchaseOrders = new List<PurchaseOrder>();
-
         const string _connectionString = "Server=localhost;Database=FreakNComics;Trusted_Connection=True;";
 
         public List<PurchaseOrder> GetPurchaseOrders()
@@ -50,6 +48,23 @@ namespace FreakNComics.Data
             var items = db.Query<LineItem>(query, parameters);
 
             return items.ToList();
+        }
+
+        public LineItem GetLineItemById(int purchaseOrderId, int id)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @$"select * 
+                           from LineItem
+                           where LineItemId = @Id and PurchaseOrderId = @PurchaseOrderId";
+            var parameters = new {
+                Id = id,
+                PurchaseOrderId = purchaseOrderId
+            };
+
+            var item = db.QueryFirstOrDefault<LineItem>(query, parameters);
+
+            return item;
         }
 
         public void Add(PurchaseOrder orderToAdd)
@@ -122,6 +137,30 @@ namespace FreakNComics.Data
 
         }
 
+        public LineItem UpdateLineItem(int id, int itemId, LineItem item)
+        {
+            var sql = @"UPDATE [dbo].[LineItem]
+                       SET [ProductId] = @productId
+                          ,[UnitPrice] = @unitPrice
+                          ,[LineItemQuantity] = @lineItemQuantity
+                       WHERE PurchaseOrderId = @Id and LineItemId = @ItemId";
+
+            var param = new
+            {
+                item.ProductId,
+                item.UnitPrice,
+                item.LineItemQuantity,
+                Id = id,
+                ItemId = itemId
+            };
+
+            using var db = new SqlConnection(_connectionString);
+
+            var updatedLineItem = db.QueryFirstOrDefault(sql, param);
+
+            return null;
+        }
+
         public PurchaseOrder Update(int id, PurchaseOrder order)
         {
             var sql = @"UPDATE [dbo].[PurchaseOrder]
@@ -157,6 +196,32 @@ namespace FreakNComics.Data
 
             db.QueryFirstOrDefault(sql, new { id = purchaseOrderId, iscomplete = true });
 
+        }
+
+        public bool RemoveLineItem(int id, int itemId)
+        {
+            var check = @"select *
+                          from PurchaseOrder
+                          where PurchaseOrderId = @Id";
+
+            using var db = new SqlConnection(_connectionString);
+
+            var param = new
+            {
+                Id = id,
+            };
+
+            var completionCheck = db.Query<PurchaseOrder>(check, param);
+
+            if (completionCheck.FirstOrDefault().IsComplete == true) return true;
+
+            var sql = @"DELETE FROM [dbo].[LineItem]
+                        WHERE LineItemId = @ItemId and PurchaseOrderId = @Id";
+
+
+            db.QueryFirstOrDefault(sql, new { Id = id, ItemId = itemId });
+
+            return false;
         }
     }
 }
