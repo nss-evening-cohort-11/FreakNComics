@@ -36,19 +36,31 @@ class ProductCategoriesCollapse extends React.Component {
   render() {
     const { isOpen, products, productTypes } = this.state;
 
-    const buildCategories = productTypes.map((type) => (
-      <div key={type.productTypeId} className="category">
-        <h2>{type.category}</h2>
-      {products.map((product) => {
-        if (type.productTypeId === product.productTypeId) {
-          return (
-            <div key={product.productId} className="product">
-              <p>{product.title}</p>
-            </div>
-          );
+    const GetTotal = (typeId) => {
+      const total = [];
+      products.forEach((product) => {
+        if (product.productTypeId === typeId) {
+          total.push(product);
         }
-        return ('');
-      })}
+      });
+      return total.length;
+    };
+
+    const buildCategories = productTypes.map((type) => (
+      <div key={type.productTypeId} className="card p-2 m-2 category">
+        <h2>{type.category} ({GetTotal(type.productTypeId)})</h2>
+        <div className="category-products">
+          {products.map((product) => {
+            if (type.productTypeId === product.productTypeId) {
+              return (
+                <div key={product.productId} className="product">
+                  <p>{product.title}</p>
+                </div>
+              );
+            }
+            return ('');
+          })}
+        </div>
       </div>
     ));
 
