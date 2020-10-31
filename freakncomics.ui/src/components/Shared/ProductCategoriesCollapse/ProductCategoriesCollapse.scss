@@ -1,6 +1,7 @@
 .ProductCategoriesCollapse {
-  display: inline;
-  .category-products > :nth-child(n+4){
-    display: none;
+  .MyCard {
+    .category-products > :nth-child(n+4){
+      display: none;
+    }
   }
 }

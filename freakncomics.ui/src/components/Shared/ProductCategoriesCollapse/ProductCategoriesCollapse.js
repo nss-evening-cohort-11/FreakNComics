@@ -47,14 +47,14 @@ class ProductCategoriesCollapse extends React.Component {
     };
 
     const buildCategories = productTypes.map((type) => (
-      <div key={type.productTypeId} className="card p-2 m-2 category">
+      <div key={type.productTypeId} className="p-2 m-2 category d-flex col-3 flex-column">
         <h2>{type.category} ({GetTotal(type.productTypeId)})</h2>
         <div className="category-products">
           {products.map((product) => {
             if (type.productTypeId === product.productTypeId) {
               return (
                 <div key={product.productId} className="product">
-                  <p>{product.title}</p>
+                  <p href="#">{product.title}</p> {/* Replace this line with a Link */}
                 </div>
               );
             }
@@ -66,16 +66,14 @@ class ProductCategoriesCollapse extends React.Component {
 
     return (
       <div className="ProductCategoriesCollapse">
-        <div>
-          <button className="btn btn-primary m-2" onClick={this.toggle}>Product Categories</button>
-          <Collapse isOpen={isOpen}>
-            <Card>
-              <CardBody className="d-flex flex-wrap justify-content-center">
-                {buildCategories}
-              </CardBody>
-            </Card>
-          </Collapse>
-        </div>
+        <button className="btn btn-primary m-2" onClick={this.toggle}>Product Categories</button>
+        <Collapse isOpen={isOpen}>
+          <Card className="col MyCard">
+            <CardBody className="d-flex flex-wrap justify-content-around MyCard">
+              {buildCategories}
+            </CardBody>
+          </Card>
+        </Collapse>
       </div>
     );
   }
