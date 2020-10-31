@@ -1,8 +1,8 @@
 import React from 'react';
-import ProductCategoriesCollapse from '../../Shared/ProductCategoriesCollapse/ProductCategoriesCollapse';
+import ProductCategoriesCollapse from '../../shared/ProductCategoriesCollapse/ProductCategoriesCollapse';
 import './Home.scss';
 import ProductData from '../../../helpers/data/ProductData';
-import ProductCard from '../../Shared/ProductCard/ProductCard';
+import ProductCard from '../../shared/ProductCard/ProductCard';
 
 class Home extends React.Component {
   state = {

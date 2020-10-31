@@ -5,10 +5,11 @@ import {
   Card,
 } from 'reactstrap';
 
+// eslint-disable-next-line import/no-unresolved
+import './ProductCategoriesCollapse.scss';
+
 import ProductData from '../../../helpers/data/ProductData';
 import ProductTypeData from '../../../helpers/data/ProductTypeData';
-
-import './ProductCategoriesCollapse.scss';
 
 class ProductCategoriesCollapse extends React.Component {
   state = {
@@ -48,12 +49,12 @@ class ProductCategoriesCollapse extends React.Component {
 
     const buildCategories = productTypes.map((type) => (
       <div key={type.productTypeId} className="p-2 m-2 category d-flex flex col-3 flex-column justify-content-center align-self-start">
-        <h2>{type.category} ({GetTotal(type.productTypeId)})</h2>
+        <h2 className="mx-auto">{type.category} ({GetTotal(type.productTypeId)})</h2>
         <div className="category-products">
           {products.map((product) => {
             if (type.productTypeId === product.productTypeId) {
               return (
-                <div key={product.productId} className="product">
+                <div key={product.productId} className="product d-flex justify-content-center">
                   <p href="#">{product.title}</p> {/* Replace this line with a Link */}
                 </div>
               );
