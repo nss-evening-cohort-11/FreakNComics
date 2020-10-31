@@ -47,7 +47,7 @@ class ProductCategoriesCollapse extends React.Component {
     };
 
     const buildCategories = productTypes.map((type) => (
-      <div key={type.productTypeId} className="p-2 m-2 category d-flex col-3 flex-column">
+      <div key={type.productTypeId} className="p-2 m-2 category d-flex flex col-3 flex-column justify-content-center align-self-start">
         <h2>{type.category} ({GetTotal(type.productTypeId)})</h2>
         <div className="category-products">
           {products.map((product) => {
@@ -65,8 +65,8 @@ class ProductCategoriesCollapse extends React.Component {
     ));
 
     return (
-      <div className="ProductCategoriesCollapse">
-        <button className="btn btn-primary m-2" onClick={this.toggle}>Product Categories</button>
+      <div className="ProductCategoriesCollapse d-flex justify-content-center flex-column">
+        <button className="btn btn-primary mx-auto mb-2" onClick={this.toggle}>Product Categories</button>
         <Collapse isOpen={isOpen}>
           <Card className="col MyCard">
             <CardBody className="d-flex flex-wrap justify-content-around MyCard">

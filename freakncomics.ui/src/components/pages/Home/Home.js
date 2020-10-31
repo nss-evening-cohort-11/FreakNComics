@@ -24,7 +24,9 @@ class Home extends React.Component {
     return (
       <div className="Home">
         <p> Hello Home Component </p>
-        <ProductCategoriesCollapse/>
+        <div className="d-flex justify-content-center">
+          <ProductCategoriesCollapse/>
+        </div>
         <h3> Latest Available Products </h3>
         <div className="LatestProducts d-flex flex-wrap justify-content-around">
           {buildLatestProductList}
