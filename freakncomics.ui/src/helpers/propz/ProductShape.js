@@ -6,7 +6,7 @@ const ProductShape = PropTypes.shape({
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
-  price: PropTypes.numberisRequired,
+  price: PropTypes.number.isRequired,
   imageUrl: PropTypes.string.isRequired,
   inStock: PropTypes.bool.isRequired,
 });

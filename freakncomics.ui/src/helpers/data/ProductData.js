@@ -6,4 +6,17 @@ const getAllProducts = () => new Promise((resolve, reject) => {
     .then((response) => resolve(response.data))
     .catch((err) => reject(err));
 });
-export default {getAllProducts}; //eslint-disable-line
+
+const getSingleProduct = (productId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/products/${productId}`)
+    .then((resp) => resolve(resp.data))
+    .catch((err) => reject(err));
+});
+
+const getProductByUserInput = (userInput) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/products/search/${userInput}`)
+    .then((response) => resolve(response.data))
+    .catch((err) => reject(err));
+});
+
+export default {getAllProducts, getSingleProduct, getProductByUserInput}; // eslint-disable-line

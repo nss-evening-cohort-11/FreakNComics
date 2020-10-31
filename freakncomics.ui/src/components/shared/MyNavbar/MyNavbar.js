@@ -1,11 +1,19 @@
 import React from 'react';
 import './MyNavbar.scss';
+import ProductData from '../../../helpers/data/ProductData';
 
 class MyNavbar extends React.Component {
+  state = { inputValue: '' }
+
   submitKeyPress(e) {
     if (e.key === 'Enter') {
-      console.log('IT WORKED!!!');
+      e.preventDefault();
+      ProductData.getProductByUserInput(this.inputValue);
     }
+  }
+
+  updateInputValue(evt) {
+    this.setState({ inputValue: evt.target.value });
   }
 
   render() {
@@ -29,7 +37,7 @@ class MyNavbar extends React.Component {
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onKeyPress={this.submitKeyPress}></input>
+      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" onKeyPress={this.submitKeyPress} value={this.state.inputValue} onChange={(evt) => this.updateInputValue(evt)}></input>
       </form>
       </div>
     </nav>
