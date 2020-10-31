@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useParams } from 'react-router-dom';
 import ProductData from '../../../helpers/data/ProductData';
 import './SingleProduct.scss';
 
@@ -9,10 +8,7 @@ class SingleProduct extends React.Component {
   }
 
   getProduct = () => {
-    // todo: grab id from URL using the below (after routing from button click)
     const { productId } = this.props.match.params;
-    // const { productId } = useParams();
-    // const productId = 1;
     ProductData.getSingleProduct(productId)
       .then((resp) => this.setState({ product: resp }))
       .catch((err) => console.error('could not get single product: ', err));
