@@ -3,17 +3,29 @@ import './MyNavbar.scss';
 import ProductData from '../../../helpers/data/ProductData';
 
 class MyNavbar extends React.Component {
-  state = { inputValue: '' }
-
-  submitKeyPress(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      ProductData.getProductByUserInput(this.inputValue);
-    }
+  state = {
+    products: [],
+    inputValue: '',
   }
 
-  updateInputValue(evt) {
-    this.setState({ inputValue: evt.target.value });
+  // submitKeyPress(e) {
+  //   if (e.key === 'Enter') {
+  //     e.preventDefault();
+  //     ProductData.getProductByUserInput(this.inputValue);
+  //   }
+  // }
+
+  handleChange(e) {
+    this.setState({ inputValue: e.target.value });
+  }
+
+  handleSubmit(e) {
+    if (e.key === 13) {
+      ProductData.getProductByUserInput(this.state.inputValue)
+        .then((response) => this.setState({ products: response }))
+        .catch((err) => (err));
+    }
+    e.preventDefault();
   }
 
   render() {
@@ -37,7 +49,7 @@ class MyNavbar extends React.Component {
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" onKeyPress={this.submitKeyPress} value={this.state.inputValue} onChange={(evt) => this.updateInputValue(evt)}></input>
+      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" value={this.state.inputValue} onChange={(evt) => this.handleChange(evt)}></input>
       </form>
       </div>
     </nav>
