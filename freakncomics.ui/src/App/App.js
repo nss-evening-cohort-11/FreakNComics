@@ -24,9 +24,6 @@ class App extends React.Component {
             </Switch>
           </React.Fragment>
         </BrowserRouter>
-
-       {/* <Home />
-       <SingleProduct /> */}
       </div>
     );
   }
