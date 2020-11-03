@@ -4,6 +4,7 @@ import {
   CardBody,
   Card,
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 import ProductData from '../../../helpers/data/ProductData';
 import ProductTypeData from '../../../helpers/data/ProductTypeData';
@@ -42,7 +43,7 @@ class ProductCategoriesCollapse extends React.Component {
         <div className="category-products">
           {products.filter((prod) => prod.productTypeId === type.productTypeId).slice(0, 3).map((product) => (
                 <div key={product.productId} className="product d-flex justify-content-center">
-                  <p href="#">{product.title}</p> {/* Replace this line with a Link */}
+                  <Link to={`products/${product.productId}`}>{product.title}</Link>
                 </div>
           ))}
         </div>
