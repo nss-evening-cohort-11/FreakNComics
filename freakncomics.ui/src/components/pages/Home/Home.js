@@ -19,7 +19,7 @@ class Home extends React.Component {
     const { products } = this.state;
 
     const buildLatestProductList = products.map((product) => (
-      <ProductCard key={product.id} product={product} />
+      <ProductCard key={`product${product.productId}`} product={product} />
     ));
     return (
       <div className="Home">
