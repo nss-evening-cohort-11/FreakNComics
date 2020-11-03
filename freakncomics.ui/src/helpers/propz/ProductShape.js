@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 const ProductShape = PropTypes.shape({
-  productId: PropTypes.string.isRequired,
-  productTypeId: PropTypes.string.isRequired,
+  productId: PropTypes.number.isRequired,
+  productTypeId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
@@ -10,4 +10,4 @@ const ProductShape = PropTypes.shape({
   imageUrl: PropTypes.string.isRequired,
   inStock: PropTypes.bool.isRequired,
 });
-export default ProductShape;
+export default { ProductShape }; //eslint-disable-line

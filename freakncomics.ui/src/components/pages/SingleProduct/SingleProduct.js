@@ -8,9 +8,7 @@ class SingleProduct extends React.Component {
   }
 
   getProduct = () => {
-    // todo: grab id from URL using the below (after routing from button click)
-    // const { productId } = this.props.match.params;
-    const productId = 1;
+    const { productId } = this.props.match.params;
     ProductData.getSingleProduct(productId)
       .then((resp) => this.setState({ product: resp }))
       .catch((err) => console.error('could not get single product: ', err));

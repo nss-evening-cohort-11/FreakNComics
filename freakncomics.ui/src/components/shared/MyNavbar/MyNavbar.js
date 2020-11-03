@@ -8,19 +8,12 @@ class MyNavbar extends React.Component {
     inputValue: '',
   }
 
-  // submitKeyPress(e) {
-  //   if (e.key === 'Enter') {
-  //     e.preventDefault();
-  //     ProductData.getProductByUserInput(this.inputValue);
-  //   }
-  // }
-
   handleChange(e) {
     this.setState({ inputValue: e.target.value });
   }
 
   handleSubmit(e) {
-    if (e.key === 13) {
+    if (e.key === 'Enter') {
       ProductData.getProductByUserInput(this.state.inputValue)
         .then((response) => this.setState({ products: response }))
         .catch((err) => (err));
@@ -49,7 +42,7 @@ class MyNavbar extends React.Component {
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" value={this.state.inputValue} onChange={(evt) => this.handleChange(evt)}></input>
+      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" value={this.state.inputValue} onKeyDown={(e) => this.handleSubmit(e)} onChange={(evt) => this.handleChange(evt)}></input>
       </form>
       </div>
     </nav>
@@ -57,4 +50,4 @@ class MyNavbar extends React.Component {
   }
 }
 
-export default MyNavbar;
+export default { MyNavbar };

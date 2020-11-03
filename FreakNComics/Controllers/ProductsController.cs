@@ -43,6 +43,14 @@ namespace FreakNComics.Controllers
             return Ok(product);
         }
 
+        [HttpGet("search/{userInput}")]
+        public IActionResult GetProductByUserInput(string userInput)
+        {
+            var product = _repo.GetProductByUserInput(userInput);
+
+            return Ok(product);
+        }
+
         // POST api/<ProductController>
         [HttpPost]
         public IActionResult CreateProduct(Products product)

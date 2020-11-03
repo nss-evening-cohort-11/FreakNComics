@@ -60,6 +60,19 @@ namespace FreakNComics.Data
             return products;
         }
 
+        public List<Products> GetProductByUserInput(string userInput)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = $@"select *
+                            from Product
+                            where Product.Title like '%' + '{userInput}' + '%'";
+
+            var products = db.Query<Products>(query);
+
+            return products.ToList();
+        }
+
         public Products Update(int id, Products products)
         {
             var sql = @"UPDATE [dbo].[Product]
