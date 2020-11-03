@@ -5,9 +5,6 @@ import {
   Card,
 } from 'reactstrap';
 
-// eslint-disable-next-line import/no-unresolved
-import './ProductCategoriesCollapse.scss';
-
 import ProductData from '../../../helpers/data/ProductData';
 import ProductTypeData from '../../../helpers/data/ProductTypeData';
 
@@ -37,30 +34,17 @@ class ProductCategoriesCollapse extends React.Component {
   render() {
     const { isOpen, products, productTypes } = this.state;
 
-    const GetTotal = (typeId) => {
-      const total = [];
-      products.forEach((product) => {
-        if (product.productTypeId === typeId) {
-          total.push(product);
-        }
-      });
-      return total.length;
-    };
+    const GetTotal = (typeId) => products.filter((product) => product.productTypeId === typeId).length;
 
     const buildCategories = productTypes.map((type) => (
       <div key={type.productTypeId} className="p-2 m-2 category d-flex flex col-3 flex-column justify-content-center align-self-start">
         <h2 className="mx-auto">{type.category} ({GetTotal(type.productTypeId)})</h2>
         <div className="category-products">
-          {products.map((product) => {
-            if (type.productTypeId === product.productTypeId) {
-              return (
+          {products.filter((prod) => prod.productTypeId === type.productTypeId).slice(0, 3).map((product) => (
                 <div key={product.productId} className="product d-flex justify-content-center">
                   <p href="#">{product.title}</p> {/* Replace this line with a Link */}
                 </div>
-              );
-            }
-            return ('');
-          })}
+          ))}
         </div>
       </div>
     ));
