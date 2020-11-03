@@ -13,4 +13,10 @@ const getSingleProduct = (productId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getAllProducts, getSingleProduct}; // eslint-disable-line
+const getLatestProducts = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/products/latestproducts`)
+    .then((response) => resolve(response.data))
+    .catch((err) => reject(err));
+});
+
+export default {getAllProducts, getSingleProduct, getLatestProducts}; // eslint-disable-line
