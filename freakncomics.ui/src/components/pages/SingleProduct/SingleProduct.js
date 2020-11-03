@@ -18,9 +18,9 @@ class SingleProduct extends React.Component {
     this.getProduct();
   }
 
-  addToShoppingCart() {
+  addToShoppingCart = () => {
     // const { productId } = this.state.product;
-    console.error(this.state);
+    console.error(this.state.product);
   }
 
   render() {
