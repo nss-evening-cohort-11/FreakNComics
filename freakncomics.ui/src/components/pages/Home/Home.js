@@ -10,7 +10,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    ProductData.getAllProducts()
+    ProductData.getLatestProducts()
       .then((products) => { this.setState({ products }); })
       .catch((err) => console.error('cannot get products', err));
   }
