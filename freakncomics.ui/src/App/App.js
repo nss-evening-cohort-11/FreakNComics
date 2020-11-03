@@ -19,6 +19,7 @@ class App extends React.Component {
           <React.Fragment>
             <Switch>
               <Route path='/products/:productId' component={SingleProduct}/>
+              {/* <Route path='/orders/:orderId' component={ShoppingCart}/> */}
               <Route path='/' component={Home}/>
               <Redirect from="*" to="/" />
             </Switch>

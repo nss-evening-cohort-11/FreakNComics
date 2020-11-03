@@ -18,6 +18,11 @@ class SingleProduct extends React.Component {
     this.getProduct();
   }
 
+  addToShoppingCart() {
+    // const { productId } = this.state.product;
+    console.error(this.state);
+  }
+
   render() {
     const { product } = this.state;
     return (
@@ -38,7 +43,7 @@ class SingleProduct extends React.Component {
             <p>Product Description: {product.description}</p>
             {
               product.inStock
-                ? <button className="btn btn-outline-primary"><i className="fas fa-shopping-cart"></i> Add to cart</button>
+                ? <button className="btn btn-outline-primary" onClick={this.addToShoppingCart}><i className="fas fa-shopping-cart"></i> Add to cart</button>
                 : <button className="btn btn-outline-primary" disabled><i className="fas fa-shopping-cart"></i> Add to cart</button>
             }
           </div>
