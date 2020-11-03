@@ -65,7 +65,6 @@ namespace FreakNComics.Data
 
             var query = @"select TOP 20 * 
                             from Product
-                            where ProductId = @pid
                             order by ProductId desc";
 
             var products = db.Query<Products>(query).ToList();
