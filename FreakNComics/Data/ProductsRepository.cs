@@ -59,7 +59,19 @@ namespace FreakNComics.Data
 
             return products;
         }
+        public List<Products> GetLatestProducts()
+        {
+            using var db = new SqlConnection(_connectionString);
 
+            var query = @"select TOP 20 * 
+                            from Product
+                            where ProductId = @pid
+                            order by ProductId desc";
+
+            var products = db.Query<Products>(query).ToList();
+
+            return products;
+        }
         public Products Update(int id, Products products)
         {
             var sql = @"UPDATE [dbo].[Product]
