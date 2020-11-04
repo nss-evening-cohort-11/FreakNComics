@@ -1,24 +1,30 @@
 import React from 'react';
 import './MyNavbar.scss';
 import ProductData from '../../../helpers/data/ProductData';
+import props from '../../../helpers/propz/ValueShape';
+
+// pass through the items i've searched into home.js
 
 class MyNavbar extends React.Component {
   state = {
     products: [],
     inputValue: '',
+    value: props,
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
+    e.preventDefault();
     this.setState({ inputValue: e.target.value });
   }
 
-  handleSubmit(e) {
-    if (e.key === 'Enter') {
-      ProductData.getProductByUserInput(this.state.inputValue)
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { inputValue } = this.state;
+    if (e.keyCode === 13) {
+      ProductData.getProductByUserInput(inputValue)
         .then((response) => this.setState({ products: response }))
         .catch((err) => (err));
     }
-    e.preventDefault();
   }
 
   render() {
@@ -42,7 +48,7 @@ class MyNavbar extends React.Component {
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" value={this.state.inputValue} onKeyDown={(e) => this.handleSubmit(e)} onChange={(evt) => this.handleChange(evt)}></input>
+      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" value={ this.state.value.inputValue } onKeyDown={this.handleSubmit} onChange={this.handleChange}></input>
       </form>
       </div>
     </nav>
@@ -50,4 +56,4 @@ class MyNavbar extends React.Component {
   }
 }
 
-export default { MyNavbar };
+export default MyNavbar;
