@@ -105,6 +105,8 @@ namespace FreakNComics.Controllers
             return Ok();
         }
 
+        // to do: refactor the first part of below to not use a for loop and instead call a patch request
+        // if the line item already exists on the PO (need to write that function)
         [HttpPost("{id}/items")]
         public IActionResult CreateLineItem(int id, LineItem item)
         {
@@ -115,7 +117,6 @@ namespace FreakNComics.Controllers
                 if (items[i].ProductId == item.ProductId)
                     {
                     return Unauthorized("Product already in cart");
-                    // todo: should this be updated to a patch request to update the lineItem quantity for the specific PO?
                     }
             }
 
