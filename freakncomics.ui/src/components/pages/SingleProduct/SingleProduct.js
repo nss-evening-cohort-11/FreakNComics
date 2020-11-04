@@ -19,8 +19,11 @@ class SingleProduct extends React.Component {
   }
 
   addToShoppingCart = () => {
-    // const { productId } = this.state.product;
-    console.error(this.state.product);
+    const { productId } = this.state.product;
+    // todo: get the userId from auth
+    // in the meantime, we'll use this hardcoded userId
+    const userId = 3;
+    console.error(`user ${userId} added ${productId} to cart`);
   }
 
   render() {
