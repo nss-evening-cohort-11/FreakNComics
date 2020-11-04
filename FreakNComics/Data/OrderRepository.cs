@@ -36,6 +36,21 @@ namespace FreakNComics.Data
             return order;
         }
 
+        public PurchaseOrder GetActivePurchaseOrderByUserId(int userId)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @"select *
+                            from PurchaseOrder
+                            where UserId = @uid 
+                            AND IsComplete = 0";
+            var parameters = new { uid = userId };
+
+            var activeOrder = db.QueryFirstOrDefault<PurchaseOrder>(query, parameters);
+
+            return activeOrder;
+        }
+
         public List<LineItem> GetLineItems(int id)
         {
             using var db = new SqlConnection(_connectionString);

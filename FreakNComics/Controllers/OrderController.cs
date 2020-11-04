@@ -46,6 +46,17 @@ namespace FreakNComics.Controllers
             return Ok(order);
         }
 
+        [HttpGet("active-orders/{userId}")]
+        public IActionResult GetActiveOrdersByUserId(int userId)
+        {
+            var activeOrder = _repo.GetActivePurchaseOrderByUserId(userId);
+
+            if (activeOrder == null) return NotFound();
+
+            return Ok(activeOrder);
+        }
+
+
         [HttpGet("{id}/items")]
         public IActionResult GetOrderItems(int id)
         {
@@ -104,6 +115,7 @@ namespace FreakNComics.Controllers
                 if (items[i].ProductId == item.ProductId)
                     {
                     return Unauthorized("Product already in cart");
+                    // todo: should this be updated to a patch request to update the lineItem quantity for the specific PO?
                     }
             }
 
