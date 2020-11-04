@@ -10,6 +10,7 @@ import {
 
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import Home from '../components/pages/Home/Home';
+import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 
 class App extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class App extends React.Component {
           <React.Fragment>
             <Switch>
               <Route path='/products/:productId' component={SingleProduct}/>
+              <Route path='/shopping-cart' component={ShoppingCart}/>
               <Route path='/' component={Home}/>
               <Redirect from="*" to="/" />
             </Switch>
