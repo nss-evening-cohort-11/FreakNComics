@@ -1,6 +1,6 @@
 import React from 'react';
 import './MyNavbar.scss';
-import ProductData from '../../../helpers/data/ProductData';
+import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
 
 // pass through the items i've searched into home.js
@@ -12,17 +12,17 @@ class MyNavbar extends React.Component {
     value: props,
   }
 
-  handleChange = (e) => {
-    e.preventDefault();
-    this.setState({ inputValue: e.target.value });
+  static props = {
+    handleSubmit: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { inputValue } = this.state;
-    ProductData.getProductByUserInput(inputValue)
-      .then((response) => this.setState({ products: response }))
-      .catch((err) => (err));
+  changingField = (e) => {
+    this.props.handleChange(e);
+  }
+
+  enterResponse = (e) => {
+    this.props.handleSubmit(e);
   }
 
   // componentDidMount() {
@@ -70,10 +70,10 @@ class MyNavbar extends React.Component {
         placeholder="Search"
         aria-label="Search"
         value={ this.state.value.inputValue}
-        onChange={this.handleChange}
+        onChange={this.changingField}
         >
       </input>
-      <button onClick={this.handleSubmit} onKeyPress={this.handleSubmit}>search</button>
+      <button onClick={this.enterResponse} onKeyPress={this.enterResponse}>search</button>
       </form>
       </div>
     </nav>
