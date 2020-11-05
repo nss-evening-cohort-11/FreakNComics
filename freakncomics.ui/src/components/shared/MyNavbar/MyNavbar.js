@@ -20,18 +20,33 @@ class MyNavbar extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { inputValue } = this.state;
-    if (e.keyCode === 13) {
-      ProductData.getProductByUserInput(inputValue)
-        .then((response) => this.setState({ products: response }))
-        .catch((err) => (err));
-    }
+    ProductData.getProductByUserInput(inputValue)
+      .then((response) => this.setState({ products: response }))
+      .catch((err) => (err));
   }
+
+  // componentDidMount() {
+  //   window.addEventListener('keypress', this.handleSubmit);
+  //   window.addEventListener('keypress', this.handleChange);
+  // }
+
+  // componentWillUnmount() {
+  //   window.removeEventListener('keypress', this.handleSubmit);
+  //   window.removeEventListener('keypress', this.handleChange);
+  // }
 
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <a className="navbar-brand" href="#">Freak 'N Comics</a>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
 
@@ -48,7 +63,17 @@ class MyNavbar extends React.Component {
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" id="userInput" type="search" placeholder="Search" aria-label="Search" value={ this.state.value.inputValue } onKeyDown={this.handleSubmit} onChange={this.handleChange}></input>
+      <input
+        className="form-control mr-sm-2"
+        id="userInput"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        value={ this.state.value.inputValue}
+        onChange={this.handleChange}
+        >
+      </input>
+      <button onClick={this.handleSubmit} onKeyPress={this.handleSubmit}>search</button>
       </form>
       </div>
     </nav>

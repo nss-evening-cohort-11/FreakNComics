@@ -59,6 +59,18 @@ namespace FreakNComics.Data
 
             return products;
         }
+        public List<Products> GetLatestProducts()
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @"select TOP 20 * 
+                            from Product
+                            order by ProductId desc";
+
+            var products = db.Query<Products>(query).ToList();
+
+            return products;
+        }
 
         public List<Products> GetProductByUserInput(string userInput)
         {
@@ -72,6 +84,9 @@ namespace FreakNComics.Data
 
             return products.ToList();
         }
+
+
+
 
         public Products Update(int id, Products products)
         {

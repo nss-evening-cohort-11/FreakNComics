@@ -19,4 +19,10 @@ const getProductByUserInput = (userInput) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default {getAllProducts, getSingleProduct, getProductByUserInput}; // eslint-disable-line
+const getLatestProducts = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/products/latestproducts`)
+    .then((response) => resolve(response.data))
+    .catch((err) => reject(err));
+});
+
+export default {getAllProducts, getSingleProduct, getProductByUserInput, getLatestProducts}; // eslint-disable-line

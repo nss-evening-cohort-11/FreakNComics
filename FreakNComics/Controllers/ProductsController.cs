@@ -31,6 +31,14 @@ namespace FreakNComics.Controllers
 
             return Ok(allProducts);
         }
+        // GET: api/<ProductController>
+        [HttpGet("latestproducts")]
+        public IActionResult DisplayLatestProducts()
+        {
+            var latestProducts = _repo.GetLatestProducts();
+
+            return Ok(latestProducts);
+        }
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
