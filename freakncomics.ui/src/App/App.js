@@ -25,10 +25,14 @@ class App extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    // const searchResult = this.props.match.params.products;
     const { inputValue } = this.state;
     ProductData.getProductByUserInput(inputValue)
-      .then((response) => this.setState({ products: response }))
+      .then((response) => {
+        this.setState({ products: response });
+      })
       .catch((err) => (err));
+    // console.log(searchResult);
   }
 
   componentDidMount() {
@@ -44,7 +48,7 @@ class App extends React.Component {
           <React.Fragment>
           <MyNavbar handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
             <Switch>
-              <Route path='/products/:productId' component={SingleProduct}/>
+              <Route path='/products/:productId' component={ SingleProduct }/>
               <Route path='/' component={() => <Home products={this.state.products}/> } />
               <Redirect from="*" to="/" />
             </Switch>

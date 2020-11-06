@@ -15,6 +15,8 @@ class MyNavbar extends React.Component {
   static props = {
     handleSubmit: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
+    searchRedirect: PropTypes.func.isRequired,
+    history: PropTypes.func.isRequired,
   }
 
   changingField = (e) => {
@@ -25,17 +27,18 @@ class MyNavbar extends React.Component {
     this.props.handleSubmit(e);
   }
 
-  // componentDidMount() {
-  //   window.addEventListener('keypress', this.handleSubmit);
-  //   window.addEventListener('keypress', this.handleChange);
-  // }
+  redirectHome = () => {
+    this.props.history();
+  }
 
-  // componentWillUnmount() {
-  //   window.removeEventListener('keypress', this.handleSubmit);
-  //   window.removeEventListener('keypress', this.handleChange);
+  // searchRedirect = (e) => {
+  //   e.preventDefault();
+  //   console.log(this.props.match);
   // }
 
   render() {
+    // const { history } = this.props.match.params;
+    // console.log(history);
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <a className="navbar-brand" href="#">Freak 'N Comics</a>
@@ -73,7 +76,7 @@ class MyNavbar extends React.Component {
         onChange={this.changingField}
         >
       </input>
-      <button onClick={this.enterResponse} onKeyPress={this.enterResponse}>search</button>
+      <button id="submitButton" onClick={ (e) => { this.enterResponse(e); }} >search</button>
       </form>
       </div>
     </nav>
