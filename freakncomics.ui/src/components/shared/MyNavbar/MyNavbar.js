@@ -3,6 +3,7 @@ import './MyNavbar.scss';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
+import ProductCategoriesCollapse from '../ProductCategoriesCollapse/ProductCategoriesCollapse';
 
 // pass through the items i've searched into home.js
 
@@ -26,7 +27,7 @@ class MyNavbar extends React.Component {
 
   enterResponse = (e) => {
     if (this.props.location.pathname !== '') {
-      this.props.history.push('/home');
+      this.props.history.push('/');
     }
     this.props.handleSubmit(e);
   }
@@ -67,6 +68,9 @@ class MyNavbar extends React.Component {
           </li>
           <li className="nav-item">
             <h4><a href="#">Cart</a></h4>
+          </li>
+          <li className="nav-item">
+            <ProductCategoriesCollapse/>
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">

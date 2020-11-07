@@ -22,7 +22,7 @@ class SingleProduct extends React.Component {
   render() {
     const { product } = this.state;
     return (
-      <div className="SingleProduct container mt-5">
+      <div className="SingleProduct d-flex flex-wrap justify-content-around mt-5">
         <div className="row">
           <div className="SingleProduct-image col-8">
             <img alt={product.title} src={product.imageUrl} />
