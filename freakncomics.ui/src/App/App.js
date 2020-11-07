@@ -25,14 +25,12 @@ class App extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // const searchResult = this.props.match.params.products;
     const { inputValue } = this.state;
     ProductData.getProductByUserInput(inputValue)
       .then((response) => {
         this.setState({ products: response });
       })
       .catch((err) => (err));
-    // console.log(searchResult);
   }
 
   componentDidMount() {

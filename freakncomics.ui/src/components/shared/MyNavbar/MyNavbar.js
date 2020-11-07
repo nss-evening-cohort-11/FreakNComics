@@ -60,7 +60,7 @@ class MyNavbar extends React.Component {
       <div className="collapse navbar-collapse d-flex justify-content-between navbarContent" id="navbarContent">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <h4><a href="#">Home</a></h4>
+            <h4><a href="/">Home</a></h4>
           </li>
           <li className="nav-item">
             <h4><a href="#">Account</a></h4>
