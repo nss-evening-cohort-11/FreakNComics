@@ -11,6 +11,7 @@ import ProductData from '../helpers/data/ProductData';
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
+import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 
 class App extends React.Component {
   state = {
@@ -48,6 +49,7 @@ class App extends React.Component {
             <Switch>
               <Route path='/products/:productId' component={ SingleProduct }/>
               <Route path='/' component={() => <Home products={this.state.products}/> } />
+              <Route path='/shopping-cart' component={ShoppingCart}/>
               <Redirect from="*" to="/" />
             </Switch>
           </React.Fragment>
