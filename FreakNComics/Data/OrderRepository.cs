@@ -101,9 +101,9 @@ namespace FreakNComics.Data
             orderToAdd.PurchaseOrderId = newId;
         }
 
-        public void AddItem(int id, LineItem itemToAdd)
+        public void AddItem(int orderId, LineItem itemToAdd)
         {
-            itemToAdd.PurchaseOrderId = id;
+            itemToAdd.PurchaseOrderId = orderId;
 
             var sql = @"INSERT INTO [dbo].[LineItem]
                        ([PurchaseOrderId]
@@ -131,25 +131,30 @@ namespace FreakNComics.Data
 
             var updatePurchaseOrder = db.Query<LineItem>(getLineItems, parameters).ToList();
 
-            decimal total = 0;
+            updatePurchaseOrderTotal(orderId, updatePurchaseOrder);
+        }
 
-            updatePurchaseOrder.ForEach((Item) => {
+        public void updatePurchaseOrderTotal(int purchaseOrderId, List<LineItem> lineItemsOnOrder)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            decimal total = 0;
+            lineItemsOnOrder.ForEach((Item) => {
                 total += Item.UnitPrice * Item.LineItemQuantity;
             });
 
-            var updateOrder = @"UPDATE [dbo].[PurchaseOrder]
+            var query = @"UPDATE [dbo].[PurchaseOrder]
                                 SET [Total] = @total
                                 Output inserted.*
                                 WHERE PurchaseOrderId = @purchaseOrderId";
 
-            var newParams = new
+            var parameters = new
             {
                 total,
-                itemToAdd.PurchaseOrderId
+                purchaseOrderId
             };
 
-            var totalPurchaseOrder = db.Query<LineItem>(updateOrder, newParams);
-
+            var updatedPurchaseOrderTotal = db.Query<LineItem>(query, parameters);
         }
 
         public LineItem UpdateLineItem(int id, int itemId, LineItem item)

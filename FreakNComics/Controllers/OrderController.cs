@@ -105,8 +105,6 @@ namespace FreakNComics.Controllers
             return Ok();
         }
 
-        // to do: refactor the first part of below to not use a for loop and instead call a patch request
-        // if the line item already exists on the PO (need to write that function)
         [HttpPost("{orderId}/items")]
         public IActionResult CreateLineItem(int orderId, LineItem item)
         {
@@ -116,9 +114,11 @@ namespace FreakNComics.Controllers
 
             if (existingLineItem.Count > 0)
             {
-                // todo: change this to call a patch function instead to update line Item quantity
-                return patchLineItemQuantity(existingLineItem[0].LineItemId);
-                //return Unauthorized("Product already in cart");
+                var updatedLineItemQuantity = patchLineItemQuantity(existingLineItem[0].LineItemId);
+                var updatedItems = _repo.GetLineItems(orderId).ToList();
+                _repo.updatePurchaseOrderTotal(orderId, updatedItems);
+                return updatedLineItemQuantity;
+                //this works, but PO total doesn't get updated properly
             }
 
             _repo.AddItem(orderId, item);
@@ -126,20 +126,20 @@ namespace FreakNComics.Controllers
             return Created($"/api/orders/{orderId}/items/{item.LineItemId}", item);
         }
 
-        [HttpGet("{oid}/products/{pid}")]
-        public IActionResult testThis(int oid, int pid)
-        {
-            var items = _repo.GetLineItems(oid);
+        //[HttpGet("{oid}/products/{pid}")]
+        //public IActionResult testThis(int oid, int pid)
+        //{
+        //    var items = _repo.GetLineItems(oid);
 
-            var existingLineItem = items.Where(li => li.ProductId == pid).ToList();
+        //    var existingLineItem = items.Where(li => li.ProductId == pid).ToList();
 
-            if (existingLineItem.Count == 0)
-            {
-                return NotFound();
-            }
+        //    if (existingLineItem.Count == 0)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(existingLineItem[0].LineItemId); // this is the key to call the patch above
-        }
+        //    return Ok(existingLineItem[0].LineItemId); // this is the key to call the patch above
+        //}
 
         [HttpPut("{id}")]
         public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
