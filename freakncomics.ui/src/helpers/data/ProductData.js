@@ -13,10 +13,16 @@ const getSingleProduct = (productId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getProductByUserInput = (userInput) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/products/search/${userInput}`)
+    .then((response) => resolve(response.data))
+    .catch((err) => reject(err));
+});
+
 const getLatestProducts = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/products/latestproducts`)
     .then((response) => resolve(response.data))
     .catch((err) => reject(err));
 });
 
-export default {getAllProducts, getSingleProduct, getLatestProducts}; // eslint-disable-line
+export default {getAllProducts, getSingleProduct, getProductByUserInput, getLatestProducts}; // eslint-disable-line

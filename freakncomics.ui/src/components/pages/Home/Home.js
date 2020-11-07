@@ -1,22 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ProductCategoriesCollapse from '../../shared/ProductCategoriesCollapse/ProductCategoriesCollapse';
 import './Home.scss';
-import ProductData from '../../../helpers/data/ProductData';
 import ProductCard from '../../shared/ProductCard/ProductCard';
 
 class Home extends React.Component {
-  state = {
-    products: [],
-  }
-
-  componentDidMount() {
-    ProductData.getLatestProducts()
-      .then((products) => { this.setState({ products }); })
-      .catch((err) => console.error('cannot get products', err));
+  static props = {
+    products: PropTypes.array.isRequired,
   }
 
   render() {
-    const { products } = this.state;
+    const { products } = this.props;
 
     const buildLatestProductList = products.map((product) => (
       <ProductCard key={`product${product.productId}`} product={product} />
