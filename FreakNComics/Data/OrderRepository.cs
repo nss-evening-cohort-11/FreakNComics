@@ -101,6 +101,7 @@ namespace FreakNComics.Data
             orderToAdd.PurchaseOrderId = newId;
         }
 
+        // ADD LINE ITEM TO PO
         public void AddItem(int orderId, LineItem itemToAdd)
         {
             itemToAdd.PurchaseOrderId = orderId;
@@ -131,10 +132,11 @@ namespace FreakNComics.Data
 
             var updatePurchaseOrder = db.Query<LineItem>(getLineItems, parameters).ToList();
 
-            updatePurchaseOrderTotal(orderId, updatePurchaseOrder);
+            UpdatePurchaseOrderTotal(orderId, updatePurchaseOrder);
         }
 
-        public void updatePurchaseOrderTotal(int purchaseOrderId, List<LineItem> lineItemsOnOrder)
+        // UPDATE TOTAL ON PO
+        public void UpdatePurchaseOrderTotal(int purchaseOrderId, List<LineItem> lineItemsOnOrder)
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -181,6 +183,7 @@ namespace FreakNComics.Data
             return null;
         }
 
+        // UPDATE QUANTITY ON LINE ITEM
         public int IncreaseLineItemQuantity(int lineItemId)
         {
             using var db = new SqlConnection(_connectionString);

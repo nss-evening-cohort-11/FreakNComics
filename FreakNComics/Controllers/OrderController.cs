@@ -46,12 +46,13 @@ namespace FreakNComics.Controllers
             return Ok(order);
         }
 
+        // SEARCH FOR ACTIVE ORDERS BY SPECIFIC USER
         [HttpGet("active-orders/{userId}")]
         public IActionResult GetActiveOrdersByUserId(int userId)
         {
             var activeOrder = _repo.GetActivePurchaseOrderByUserId(userId);
 
-            if (activeOrder == null) return NotFound();
+            if (activeOrder == null) return NoContent();
 
             return Ok(activeOrder);
         }
@@ -105,6 +106,7 @@ namespace FreakNComics.Controllers
             return Ok();
         }
 
+        // ADD LINE ITEM TO PO
         [HttpPost("{orderId}/items")]
         public IActionResult CreateLineItem(int orderId, LineItem item)
         {
@@ -116,7 +118,7 @@ namespace FreakNComics.Controllers
             {
                 var updatedLineItemQuantity = patchLineItemQuantity(existingLineItem[0].LineItemId);
                 var updatedItems = _repo.GetLineItems(orderId).ToList();
-                _repo.updatePurchaseOrderTotal(orderId, updatedItems);
+                _repo.UpdatePurchaseOrderTotal(orderId, updatedItems);
                 return updatedLineItemQuantity;
             }
 
@@ -139,6 +141,7 @@ namespace FreakNComics.Controllers
 
         }
 
+        // IF PRODUCT EXISTS ON PO, UPDATE QUANTITY ON LINE ITEM
         [HttpPatch]
         public IActionResult patchLineItemQuantity(int lineItemId)
         {

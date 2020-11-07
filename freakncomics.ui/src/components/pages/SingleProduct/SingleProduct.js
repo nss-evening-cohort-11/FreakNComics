@@ -1,4 +1,6 @@
 import React from 'react';
+// import _ from 'lodash';
+
 import ProductData from '../../../helpers/data/ProductData';
 import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './SingleProduct.scss';
@@ -9,6 +11,7 @@ class SingleProduct extends React.Component {
   }
 
   getProduct = () => {
+    // todo: grab id from URL using the below (after routing from button click)
     const { productId } = this.props.match.params;
     ProductData.getSingleProduct(productId)
       .then((resp) => this.setState({ product: resp }))
@@ -19,15 +22,25 @@ class SingleProduct extends React.Component {
     this.getProduct();
   }
 
+  // activeOrderChecker = (userId) => {
+  //   PurchaseOrderData.checkForActiveOrdersByUserId(userId)
+  //     .then((resp) => resp)
+  //     .catch((err) => console.error('could not get orders for user'));
+  // }
+
   addToShoppingCart = () => {
     // const { productId } = this.state.product;
     // todo: get the userId from auth
     // in the meantime, we'll use this hardcoded userId
     const userId = 5;
-    PurchaseOrderData.checkForActiveOrdersByUserId(userId)
-      .then((resp) => console.error(resp))
+    // step 1: check for an active order for the user
+    // console.error(this.activeOrderChecker(userId));
+    const activeOrder = PurchaseOrderData.checkForActiveOrdersByUserId(userId)
+      .then((resp) => resp)
       .catch((err) => console.error('could not get orders for user'));
-    // console.error(`user ${userId} added ${productId} to cart`);
+    console.error(activeOrder);
+    // step 2: depending on the result, either create an order and line item and link them
+    // or if active order exists, just create new line item and add to it
   }
 
   render() {
