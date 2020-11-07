@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductData from '../../../helpers/data/ProductData';
+import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './SingleProduct.scss';
 
 class SingleProduct extends React.Component {
@@ -19,11 +20,14 @@ class SingleProduct extends React.Component {
   }
 
   addToShoppingCart = () => {
-    const { productId } = this.state.product;
+    // const { productId } = this.state.product;
     // todo: get the userId from auth
     // in the meantime, we'll use this hardcoded userId
-    const userId = 3;
-    console.error(`user ${userId} added ${productId} to cart`);
+    const userId = 5;
+    PurchaseOrderData.checkForActiveOrdersByUserId(userId)
+      .then((resp) => console.error(resp))
+      .catch((err) => console.error('could not get orders for user'));
+    // console.error(`user ${userId} added ${productId} to cart`);
   }
 
   render() {

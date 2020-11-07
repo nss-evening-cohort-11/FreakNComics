@@ -118,28 +118,12 @@ namespace FreakNComics.Controllers
                 var updatedItems = _repo.GetLineItems(orderId).ToList();
                 _repo.updatePurchaseOrderTotal(orderId, updatedItems);
                 return updatedLineItemQuantity;
-                //this works, but PO total doesn't get updated properly
             }
 
             _repo.AddItem(orderId, item);
 
             return Created($"/api/orders/{orderId}/items/{item.LineItemId}", item);
         }
-
-        //[HttpGet("{oid}/products/{pid}")]
-        //public IActionResult testThis(int oid, int pid)
-        //{
-        //    var items = _repo.GetLineItems(oid);
-
-        //    var existingLineItem = items.Where(li => li.ProductId == pid).ToList();
-
-        //    if (existingLineItem.Count == 0)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(existingLineItem[0].LineItemId); // this is the key to call the patch above
-        //}
 
         [HttpPut("{id}")]
         public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
