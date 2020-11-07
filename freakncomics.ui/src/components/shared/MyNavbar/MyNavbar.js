@@ -1,5 +1,6 @@
 import React from 'react';
 import './MyNavbar.scss';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
 
@@ -24,6 +25,9 @@ class MyNavbar extends React.Component {
   }
 
   enterResponse = (e) => {
+    if (this.props.location.pathname !== '') {
+      this.props.history.push('/home');
+    }
     this.props.handleSubmit(e);
   }
 
@@ -76,7 +80,7 @@ class MyNavbar extends React.Component {
         onChange={this.changingField}
         >
       </input>
-      <button id="submitButton" onClick={ (e) => { this.enterResponse(e); }} >search</button>
+      <button id="submitButton" onClick={this.enterResponse} >search</button>
       </form>
       </div>
     </nav>
@@ -84,4 +88,4 @@ class MyNavbar extends React.Component {
   }
 }
 
-export default MyNavbar;
+export default withRouter(MyNavbar);
