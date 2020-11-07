@@ -107,22 +107,38 @@ namespace FreakNComics.Controllers
 
         // to do: refactor the first part of below to not use a for loop and instead call a patch request
         // if the line item already exists on the PO (need to write that function)
-        [HttpPost("{id}/items")]
-        public IActionResult CreateLineItem(int id, LineItem item)
+        [HttpPost("{orderId}/items")]
+        public IActionResult CreateLineItem(int orderId, LineItem item)
         {
-            var items = _repo.GetLineItems(id).ToArray();
+            var items = _repo.GetLineItems(orderId);
 
-            for (int i = 0; i < items.Count(); i++)
+            var existingLineItem = items.Where(li => li.ProductId == item.ProductId).ToList();
+
+            if (existingLineItem.Count > 0)
             {
-                if (items[i].ProductId == item.ProductId)
-                    {
-                    return Unauthorized("Product already in cart");
-                    }
+                // todo: change this to call a patch function instead to update line Item quantity
+                return patchLineItemQuantity(existingLineItem[0].LineItemId);
+                //return Unauthorized("Product already in cart");
             }
 
-            _repo.AddItem(id, item);
+            _repo.AddItem(orderId, item);
 
-            return Created($"/api/orders/{id}/items/{item.LineItemId}", item);
+            return Created($"/api/orders/{orderId}/items/{item.LineItemId}", item);
+        }
+
+        [HttpGet("{oid}/products/{pid}")]
+        public IActionResult testThis(int oid, int pid)
+        {
+            var items = _repo.GetLineItems(oid);
+
+            var existingLineItem = items.Where(li => li.ProductId == pid).ToList();
+
+            if (existingLineItem.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(existingLineItem[0].LineItemId); // this is the key to call the patch above
         }
 
         [HttpPut("{id}")]
@@ -137,6 +153,13 @@ namespace FreakNComics.Controllers
 
             return Ok(updatedOrder);
 
+        }
+
+        [HttpPatch]
+        public IActionResult patchLineItemQuantity(int lineItemId)
+        {
+            var updatedQuantity = _repo.IncreaseLineItemQuantity(lineItemId);
+            return Ok(updatedQuantity);
         }
 
         [HttpDelete("{id}")]

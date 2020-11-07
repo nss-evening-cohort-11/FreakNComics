@@ -51,18 +51,18 @@ namespace FreakNComics.Data
             return activeOrder;
         }
 
-        public List<LineItem> GetLineItems(int id)
+        public IEnumerable<LineItem> GetLineItems(int orderId)
         {
             using var db = new SqlConnection(_connectionString);
 
             var query = @$"select *
                            from LineItem
                            where PurchaseOrderId = @Id";
-            var parameters = new { Id = id };
+            var parameters = new { Id = orderId };
 
             var items = db.Query<LineItem>(query, parameters);
 
-            return items.ToList();
+            return items;
         }
 
         public LineItem GetLineItemById(int purchaseOrderId, int id)
@@ -174,6 +174,26 @@ namespace FreakNComics.Data
             var updatedLineItem = db.QueryFirstOrDefault(sql, param);
 
             return null;
+        }
+
+        public int IncreaseLineItemQuantity(int lineItemId)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @"UPDATE [dbo].[LineItem]
+                           SET [LineItemQuantity] = LineItemQuantity + 1
+                           output inserted.LineItemQuantity
+                           WHERE LineItemId = @id";
+
+            var parameters = new
+            {
+                // todo: change the quantity incrementer to a variable
+                id = lineItemId
+            };
+
+            var updatedQuantity = db.QueryFirstOrDefault<int>(query, parameters);
+
+            return updatedQuantity;
         }
 
         public PurchaseOrder Update(int id, PurchaseOrder order)
