@@ -1,5 +1,6 @@
 import React from 'react';
-import PurcahseOrderData from '../../../helpers/data/PurcahseOrderData';
+import ProductData from '../../../helpers/data/ProductData';
+import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './ShoppingCart.scss';
 
 class ShoppingCart extends React.Component {
@@ -13,51 +14,52 @@ class ShoppingCart extends React.Component {
 
   GetShoppingCartOrderandItems = () => {
     const userId = 3;
-    PurcahseOrderData.getCompletePurchaseOrder(userId)
+
+    PurchaseOrderData.getCompletePurchaseOrder(userId)
       .then((resp) => {
         console.error(resp);
         this.setState({ activeOrder: resp });
         console.error(resp.purchaseOrderId);
-        PurcahseOrderData.getLineItemsByPurchaseOrderId(resp.purchaseOrderId)
+        PurchaseOrderData.getLineItemsByPurchaseOrderId(resp.purchaseOrderId)
           .then((response) => {
             console.error(response);
-            this.setState({ lineItems: [response] });
-          });
-      })
-      .catch((err) => console.error(err));
-  };
-
-  GetProductIdFromLineItem = () => {
-    const purchaseOrderId = 3;
-    PurcahseOrderData.getLineItemsByPurchaseOrderId(purchaseOrderId)
-      .then((response) => {
-        const LineItems = response.data;
-        const ArrayofLineItems = [];
-        ArrayofLineItems.push(LineItems.productId);
-        console.error(ArrayofLineItems);
+            this.setState({ lineItems: response }, () => { this.GetProductByLineItem(); });
+            console.error(this.state);
+          })
+          .catch((err) => console.error(err));
       });
   };
 
-  componentDidMount() {
-    this.GetShoppingCartOrderandItems();
-    this.GetProductIdFromLineItem();
-  }
+GetProductByLineItem = () => {
+  const { lineItems } = this.state;
+  lineItems.forEach((singleLineItem) => {
+    ProductData.getSingleProduct(singleLineItem.product)
+      .then((product) => {
+        const finalProducts = [];
+        product.forEach((lineItemProduct) => {
+          const productCopy = { ...lineItemProduct };
+          productCopy.lineItemProduct = lineItemProduct.find((x) => x.productId === singleLineItem.productId);
+          finalProducts.push(productCopy);
+        });
+      })
+      .catch((err) => console.error(err));
+  });
+}
 
-  render() {
-    // const { lineItems, products } = this.state;
+componentDidMount() {
+  this.GetShoppingCartOrderandItems();
+}
 
-    // const buildProductCardFromLineItem = lineItems.map((lineItem) => (
-    //   <ProductCard key={lineItem.LineItemId} lineItem={lineItem} />
-    // ));
-    return (
+render() {
+  return (
       <div className="lineItems container mt-5">
       <div className="row">
         <div className="lineItems-details col-4">
         </div>
       </div>
     </div>
-    );
-  }
+  );
+}
 }
 
 export default ShoppingCart;
