@@ -52,7 +52,7 @@ class ProductCategoriesCollapse extends React.Component {
 
     return (
       <div className="ProductCategoriesCollapse d-flex justify-content-center flex-column">
-        <button className="btn btn-primary mx-auto mb-2" onClick={this.toggle}>Product Categories</button>
+        <a className="categoriesButton" onClick={this.toggle}><h4>Product Categories</h4></a>
         <Collapse isOpen={isOpen}>
           <Card className="col MyCard">
             <CardBody className="d-flex flex-wrap justify-content-around MyCard">
