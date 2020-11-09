@@ -1,14 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Collapse,
   CardBody,
   Card,
 } from 'reactstrap';
-import {
-  Link,
-  withRouter,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import ProductData from '../../../helpers/data/ProductData';
 import ProductTypeData from '../../../helpers/data/ProductTypeData';
@@ -18,11 +14,6 @@ class ProductCategoriesCollapse extends React.Component {
     isOpen: false,
     products: [],
     productTypes: [],
-    history: '',
-  }
-
-  static props = {
-    history: PropTypes.func.isRequired,
   }
 
   getInfo = () => {
@@ -38,18 +29,14 @@ class ProductCategoriesCollapse extends React.Component {
   }
 
   toggle = () => {
-    if (this.props.location.pathname !== '') {
-      this.props.history.push('/');
-    }
     this.setState({ isOpen: !this.state.isOpen });
   }
 
   render() {
-    const {
-      isOpen, products, productTypes,
-    } = this.state;
+    const { isOpen, products, productTypes } = this.state;
 
     const GetTotal = (typeId) => products.filter((product) => product.productTypeId === typeId).length;
+
     const buildCategories = productTypes.map((type) => (
       <div key={type.productTypeId} className="p-2 m-2 category d-flex flex col-3 flex-column justify-content-center align-self-start">
 
@@ -57,8 +44,8 @@ class ProductCategoriesCollapse extends React.Component {
 
         <div className="category-products">
           {products.filter((prod) => prod.productTypeId === type.productTypeId).slice(0, 3).map((product) => (
-            <div key={product.productId} className="product d-flex justify-content-center">
-                  <a href={`products/${product.productId}`}>{product.title}</a>
+                <div key={product.productId} className="product d-flex justify-content-center">
+                  <a href={`/products/${product.productId}`}>{product.title}</a>
                 </div>
           ))}
         </div>
@@ -80,4 +67,4 @@ class ProductCategoriesCollapse extends React.Component {
   }
 }
 
-export default withRouter(ProductCategoriesCollapse);
+export default ProductCategoriesCollapse;
