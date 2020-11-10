@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
 import ProductCategoriesCollapse from '../ProductCategoriesCollapse/ProductCategoriesCollapse';
 
+// pass through the items i've searched into home.js
+
 class MyNavbar extends React.Component {
   state = {
     products: [],
@@ -34,7 +36,14 @@ class MyNavbar extends React.Component {
     this.props.history();
   }
 
+  // searchRedirect = (e) => {
+  //   e.preventDefault();
+  //   console.log(this.props.match);
+  // }
+
   render() {
+    // const { history } = this.props.match.params;
+    // console.log(history);
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <a className="navbar-brand" href="#">Freak 'N Comics</a>
