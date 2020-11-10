@@ -3,8 +3,7 @@ import './MyNavbar.scss';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
-
-// pass through the items i've searched into home.js
+import ProductCategoriesCollapse from '../ProductCategoriesCollapse/ProductCategoriesCollapse';
 
 class MyNavbar extends React.Component {
   state = {
@@ -26,7 +25,7 @@ class MyNavbar extends React.Component {
 
   enterResponse = (e) => {
     if (this.props.location.pathname !== '') {
-      this.props.history.push('/home');
+      this.props.history.push('/');
     }
     this.props.handleSubmit(e);
   }
@@ -35,14 +34,7 @@ class MyNavbar extends React.Component {
     this.props.history();
   }
 
-  // searchRedirect = (e) => {
-  //   e.preventDefault();
-  //   console.log(this.props.match);
-  // }
-
   render() {
-    // const { history } = this.props.match.params;
-    // console.log(history);
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <a className="navbar-brand" href="#">Freak 'N Comics</a>
@@ -67,6 +59,9 @@ class MyNavbar extends React.Component {
           </li>
           <li className="nav-item">
             <h4><a href="#">Cart</a></h4>
+          </li>
+          <li className="nav-item">
+            <ProductCategoriesCollapse/>
           </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">

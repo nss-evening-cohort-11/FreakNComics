@@ -39,11 +39,13 @@ class ProductCategoriesCollapse extends React.Component {
 
     const buildCategories = productTypes.map((type) => (
       <div key={type.productTypeId} className="p-2 m-2 category d-flex flex col-3 flex-column justify-content-center align-self-start">
+
         <h2 className="mx-auto">{type.category} ({GetTotal(type.productTypeId)})</h2>
+
         <div className="category-products">
           {products.filter((prod) => prod.productTypeId === type.productTypeId).slice(0, 3).map((product) => (
                 <div key={product.productId} className="product d-flex justify-content-center">
-                  <Link to={`products/${product.productId}`}>{product.title}</Link>
+                  <a href={`/products/${product.productId}`}>{product.title}</a>
                 </div>
           ))}
         </div>
@@ -52,7 +54,7 @@ class ProductCategoriesCollapse extends React.Component {
 
     return (
       <div className="ProductCategoriesCollapse d-flex justify-content-center flex-column">
-        <button className="btn btn-primary mx-auto mb-2" onClick={this.toggle}>Product Categories</button>
+        <a className="categoriesButton" onClick={this.toggle}><h4>Product Categories</h4></a>
         <Collapse isOpen={isOpen}>
           <Card className="col MyCard">
             <CardBody className="d-flex flex-wrap justify-content-around MyCard">
