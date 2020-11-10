@@ -1,13 +1,23 @@
 .ProductCard 
 {
-  .card{
-  color: rgba(0, 0, 0, 0.644);
-   max-width: 800px;
+  margin-top: 20px;
+  .card-body{
+  display: block;
+  color: whitesmoke;
+   height: 450px;
+   width: 350px;
 
-   background-color: rgba(128, 128, 128, 0.404);
+   background-color: slategray;
   }
   .card-img{
-    max-width: 450px;
-    max-height: 400px;
+    height: 250px;
+    width: auto;
+    margin-top: 15px;
+    margin-left: 10%;
+  }
+  .view-single-product-button{
+    margin-top: 20px;
+    margin-left: 10%;
+    background-color: whitesmoke;
   }
 }
