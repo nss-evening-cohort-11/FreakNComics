@@ -12,23 +12,23 @@ class ShoppingCart extends React.Component {
       isComplete: false,
     }
 
-  GetShoppingCartOrderandItems = () => {
-    const userId = 3;
+GetShoppingCartOrderandItems = () => {
+  const userId = 3;
 
-    PurchaseOrderData.getCompletePurchaseOrder(userId)
-      .then((resp) => {
-        console.error(resp);
-        this.setState({ activeOrder: resp });
-        console.error(resp.purchaseOrderId);
-        PurchaseOrderData.getLineItemsByPurchaseOrderId(resp.purchaseOrderId)
-          .then((response) => {
-            console.error(response);
-            this.setState({ lineItems: response }, () => { this.GetProductByLineItem(); });
-            console.error(this.state);
-          })
-          .catch((err) => console.error(err));
-      });
-  };
+  PurchaseOrderData.getCompletePurchaseOrder(userId)
+    .then((resp) => {
+      console.error(resp);
+      this.setState({ activeOrder: resp });
+      console.error(resp.purchaseOrderId);
+      PurchaseOrderData.getLineItemsByPurchaseOrderId(resp.purchaseOrderId)
+        .then((response) => {
+          console.error(response);
+          this.setState({ lineItems: response }, () => { this.GetProductByLineItem(); });
+          console.error(this.state);
+        })
+        .catch((err) => console.error(err));
+    });
+};
 
 GetProductByLineItem = () => {
   const { lineItems } = this.state;

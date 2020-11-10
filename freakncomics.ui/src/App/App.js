@@ -48,8 +48,8 @@ class App extends React.Component {
           <MyNavbar handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
             <Switch>
               <Route path='/products/:productId' component={ SingleProduct }/>
-              <Route path='/' component={() => <Home products={this.state.products}/> } />
               <Route path='/shopping-cart' component={ShoppingCart}/>
+              <Route path='/' component={() => <Home products={this.state.products}/> } />
               <Redirect from="*" to="/" />
             </Switch>
           </React.Fragment>
