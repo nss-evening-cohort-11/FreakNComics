@@ -1,5 +1,8 @@
 import React from 'react';
 import './MyNavbar.scss';
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
@@ -17,6 +20,7 @@ class MyNavbar extends React.Component {
     handleChange: PropTypes.func.isRequired,
     searchRedirect: PropTypes.func.isRequired,
     history: PropTypes.func.isRequired,
+    authed: PropTypes.bool.isRequired,
   }
 
   changingField = (e) => {
@@ -30,11 +34,24 @@ class MyNavbar extends React.Component {
     this.props.handleSubmit(e);
   }
 
+  logMeOut = (e) => {
+    e.preventDefault();
+    firebase.auth().signOut();
+  }
+
+  loginClickEvent = (e) => {
+    e.preventDefault();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
+  }
+
   redirectHome = () => {
     this.props.history();
   }
 
   render() {
+    const { authed } = this.props;
+
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <a className="navbar-brand" href="#">Freak 'N Comics</a>
@@ -63,6 +80,13 @@ class MyNavbar extends React.Component {
           <li className="nav-item">
             <ProductCategoriesCollapse/>
           </li>
+          <li className="nav-item">
+            {
+              authed
+                ? <button className="btn btn-danger" onClick={this.logMeOut}>Logout</button>
+                : <button className="btn btn-primary" onClick={this.loginClickEvent}>Login</button>
+            }
+            </li>
         </ul>
         <form className="form-inline my-2 my-lg-0">
       <input
