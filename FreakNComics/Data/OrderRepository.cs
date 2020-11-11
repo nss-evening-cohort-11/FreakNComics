@@ -82,23 +82,23 @@ namespace FreakNComics.Data
             return item;
         }
 
-        public void Add(PurchaseOrder orderToAdd)
+        public PurchaseOrder Add(PurchaseOrder orderToAdd)
         {
             var sql = @"INSERT INTO [dbo].[PurchaseOrder]
                        ([UserId]
                        ,[InvoiceDate]
-                       ,[PaymentTypeId]
                        ,[Total]
                        ,[IsComplete])
 	             Output inserted.PurchaseOrderId
                  VALUES
-                       (@userid, @invoicedate, @paymenttypeid, @total, @iscomplete)";
+                       (@userid, @invoicedate, @total, @iscomplete)";
 
             using var db = new SqlConnection(_connectionString);
 
             var newId = db.ExecuteScalar<int>(sql, orderToAdd);
 
             orderToAdd.PurchaseOrderId = newId;
+            return orderToAdd;
         }
 
         // ADD LINE ITEM TO PO
@@ -209,7 +209,6 @@ namespace FreakNComics.Data
             var sql = @"UPDATE [dbo].[PurchaseOrder]
                         SET [UserId] = @userid
                             ,[InvoiceDate] = @invoicedate
-                            ,[PaymentTypeId] = @paymenttypeid
                             ,[Total] = @total
                         Output inserted.*
                         WHERE PurchaseOrderId = @id";
@@ -220,7 +219,6 @@ namespace FreakNComics.Data
             {
                 order.UserId,
                 order.InvoiceDate,
-                order.PaymentTypeId,
                 order.Total,
                 id
             };

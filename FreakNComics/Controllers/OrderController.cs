@@ -20,6 +20,8 @@ namespace FreakNComics.Controllers
             _repo = new OrderRepository();
         }
 
+        // PURCHASE ORDER METHODS
+
         [HttpPost]
         public IActionResult CreatePurchaseOrder(PurchaseOrder order)
         {
@@ -57,6 +59,34 @@ namespace FreakNComics.Controllers
             return Ok(activeOrder);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
+        {
+            if (_repo.GetPurchaseOrderById(id) == null)
+            {
+                return NotFound();
+            }
+
+            var updatedOrder = _repo.Update(id, purchaseOrder);
+
+            return Ok(updatedOrder);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOrder(int id)
+        {
+            if (_repo.GetPurchaseOrderById(id) == null)
+            {
+                return NotFound();
+            }
+
+            _repo.Remove(id);
+
+            return Ok();
+        }
+
+
+        // LINE ITEM METHODS
 
         [HttpGet("{id}/items")]
         public IActionResult GetOrderItems(int id)
@@ -127,19 +157,7 @@ namespace FreakNComics.Controllers
             return Created($"/api/orders/{orderId}/items/{item.LineItemId}", item);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
-        {
-            if (_repo.GetPurchaseOrderById(id) == null)
-            {
-                return NotFound();
-            }
 
-            var updatedOrder = _repo.Update(id, purchaseOrder);
-
-            return Ok(updatedOrder);
-
-        }
 
         // IF PRODUCT EXISTS ON PO, UPDATE QUANTITY ON LINE ITEM
         [HttpPatch]
@@ -149,17 +167,44 @@ namespace FreakNComics.Controllers
             return Ok(updatedQuantity);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteOrder(int id)
+
+        [HttpGet("cart/{userId}")]
+        public IActionResult AddToCart(int userId, Products product)
         {
-            if(_repo.GetPurchaseOrderById(id) == null)
+            var usersActiveOrder = _repo.GetActivePurchaseOrderByUserId(userId);
+
+            // Logic if user does not have an active order 
+            if (usersActiveOrder == null)
             {
-                return NotFound();
+                var newOrderToAdd = new PurchaseOrder
+                {
+                    UserId = userId,
+                    InvoiceDate = DateTime.Now,
+                    Total = 0,
+                    IsComplete = false,
+                };
+
+                var newOrder = _repo.Add(newOrderToAdd);
+
+                var lineItemToAdd = new LineItem
+                {
+                    PurchaseOrderId = newOrder.PurchaseOrderId,
+                    ProductId = product.ProductId,
+                    UnitPrice = product.Price,
+                    LineItemQuantity = 1,
+                };
+
+                var newLineItem = CreateLineItem(newOrder.PurchaseOrderId, lineItemToAdd);
+                
+                return Ok("Created new order");
             }
-
-            _repo.Remove(id);
-
-            return Ok();
+            // Logic if user has an active order already
+            else
+            {
+                return Ok("Added product to existing user order");
+            };
         }
+
+
     }
 }
