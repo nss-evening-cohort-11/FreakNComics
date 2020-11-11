@@ -1,15 +1,14 @@
 import React from 'react';
-import ProductData from '../../../helpers/data/ProductData';
 import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './ShoppingCart.scss';
+import SingleLineItem from '../../SingleLineItem/SingleLineItem';
 
 class ShoppingCart extends React.Component {
     state = {
       activeOrder: {},
-      lineItems: [],
-      products: [],
       authed: true,
       isComplete: false,
+      lineItems: [],
     }
 
 GetShoppingCartOrderandItems = () => {
@@ -17,47 +16,31 @@ GetShoppingCartOrderandItems = () => {
 
   PurchaseOrderData.getCompletePurchaseOrder(userId)
     .then((resp) => {
-      console.error(resp);
       this.setState({ activeOrder: resp });
-      console.error(resp.purchaseOrderId);
       PurchaseOrderData.getLineItemsByPurchaseOrderId(resp.purchaseOrderId)
         .then((response) => {
-          console.error(response);
-          this.setState({ lineItems: response }, () => { this.GetProductByLineItem(); });
-          console.error(this.state);
-        })
-        .catch((err) => console.error(err));
-    });
-};
-
-GetProductByLineItem = () => {
-  const { lineItems } = this.state;
-  lineItems.forEach((singleLineItem) => {
-    ProductData.getSingleProduct(singleLineItem.product)
-      .then((product) => {
-        const finalProducts = [];
-        product.forEach((lineItemProduct) => {
-          const productCopy = { ...lineItemProduct };
-          productCopy.lineItemProduct = lineItemProduct.find((x) => x.productId === singleLineItem.productId);
-          finalProducts.push(productCopy);
+          this.setState({ lineItems: response });
         });
-      })
-      .catch((err) => console.error(err));
-  });
-}
+    })
+    .catch((err) => console.error(err));
+};
 
 componentDidMount() {
   this.GetShoppingCartOrderandItems();
 }
 
 render() {
+  const { lineItems } = this.state;
+  const buildLineItems = lineItems.map((lineItem, index) => (
+    <SingleLineItem key={index} lineItem={lineItem} />
+  ));
   return (
       <div className="lineItems container mt-5">
-      <div className="row">
-        <div className="lineItems-details col-4">
-        </div>
+        <h2 className="shopping-cart d-flex flex-wrap justify-content-around mt-5 mb-3">
+          Your Cart:
+        </h2>
+      {buildLineItems}
       </div>
-    </div>
   );
 }
 }
