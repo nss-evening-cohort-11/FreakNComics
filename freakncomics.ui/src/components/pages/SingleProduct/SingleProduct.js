@@ -22,25 +22,14 @@ class SingleProduct extends React.Component {
     this.getProduct();
   }
 
-  // activeOrderChecker = (userId) => {
-  //   PurchaseOrderData.checkForActiveOrdersByUserId(userId)
-  //     .then((resp) => resp)
-  //     .catch((err) => console.error('could not get orders for user'));
-  // }
-
   addToShoppingCart = () => {
-    // const { productId } = this.state.product;
+    const { product } = this.state;
     // todo: get the userId from auth
     // in the meantime, we'll use this hardcoded userId
-    const userId = 5;
-    // step 1: check for an active order for the user
-    // console.error(this.activeOrderChecker(userId));
-    const activeOrder = PurchaseOrderData.checkForActiveOrdersByUserId(userId)
-      .then((resp) => resp)
+    const userId = 3;
+    PurchaseOrderData.addToCart(userId, product)
+      .then((resp) => window.alert(`${product.title} successfully added to your cart`)) //eslint-disable-line
       .catch((err) => console.error('could not get orders for user'));
-    console.error(activeOrder);
-    // step 2: depending on the result, either create an order and line item and link them
-    // or if active order exists, just create new line item and add to it
   }
 
   render() {

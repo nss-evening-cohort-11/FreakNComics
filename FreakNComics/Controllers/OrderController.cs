@@ -168,7 +168,7 @@ namespace FreakNComics.Controllers
         }
 
 
-        [HttpGet("cart/{userId}")]
+        [HttpPut("cart/{userId}")]
         public IActionResult AddToCart(int userId, Products product)
         {
             var usersActiveOrder = _repo.GetActivePurchaseOrderByUserId(userId);
@@ -194,17 +194,25 @@ namespace FreakNComics.Controllers
                     LineItemQuantity = 1,
                 };
 
-                var newLineItem = CreateLineItem(newOrder.PurchaseOrderId, lineItemToAdd);
+                CreateLineItem(newOrder.PurchaseOrderId, lineItemToAdd);
                 
                 return Ok("Created new order");
             }
             // Logic if user has an active order already
             else
             {
+                var lineItemToAdd = new LineItem
+                {
+                    PurchaseOrderId = usersActiveOrder.PurchaseOrderId,
+                    ProductId = product.ProductId,
+                    UnitPrice = product.Price,
+                    LineItemQuantity = 1,
+                };
+
+                CreateLineItem(usersActiveOrder.PurchaseOrderId, lineItemToAdd);
+
                 return Ok("Added product to existing user order");
             };
         }
-
-
     }
 }
