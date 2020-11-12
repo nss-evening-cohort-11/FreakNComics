@@ -4,7 +4,7 @@ import './Home.scss';
 import ProductCard from '../../shared/ProductCard/ProductCard';
 
 class Home extends React.Component {
-  static props = {
+  static propsTypes = {
     products: PropTypes.array.isRequired,
   }
 
