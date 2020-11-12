@@ -20,7 +20,7 @@ const getCompletePurchaseOrder = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-const removeLineItem = (orderId, itemId) => axios.delete(`${baseUrl}/orders/${orderId}/items/${itemId}`);
+const removeLineItem = (id, itemId) => axios.delete(`${baseUrl}/orders/${id}/items/${itemId}`);
 
 export default {
   addToCart, getLineItemsByPurchaseOrderId, getCompletePurchaseOrder, removeLineItem,

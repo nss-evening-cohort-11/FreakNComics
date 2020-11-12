@@ -132,7 +132,8 @@ namespace FreakNComics.Controllers
             {
                 return Unauthorized("Order is already completed");
             }
-
+            var updatedItems = _repo.GetLineItems(id).ToList();
+            _repo.UpdatePurchaseOrderTotal(id, updatedItems);
             return Ok();
         }
 
