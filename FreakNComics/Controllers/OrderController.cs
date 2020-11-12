@@ -7,6 +7,7 @@ using FreakNComics.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FreakNComics.Controllers
 {
@@ -15,9 +16,9 @@ namespace FreakNComics.Controllers
     public class OrderController : ControllerBase
     {
         OrderRepository _repo;
-        public OrderController()
+        public OrderController(OrderRepository repo)
         {
-            _repo = new OrderRepository();
+            _repo = repo;
         }
 
         [HttpPost]

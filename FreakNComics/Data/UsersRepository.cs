@@ -5,12 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using FreakNComics.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace FreakNComics.Data
 {
     public class UsersRepository
     {
-        const string _connectionString = "Server = localhost; Database = FreakNComics; Trusted_Connection = True;";
+        readonly string _connectionString;
+
+        public UsersRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("FreakNComics");
+        }
 
         public IEnumerable<User> GetAll()
         {

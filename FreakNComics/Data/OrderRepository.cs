@@ -5,13 +5,19 @@ using System.Threading.Tasks;
 using Dapper;
 using FreakNComics.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 
 namespace FreakNComics.Data
 {
     public class OrderRepository
     {
-        const string _connectionString = "Server=localhost;Database=FreakNComics;Trusted_Connection=True;";
+        readonly string _connectionString;
+        
+        public OrderRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("FreakNComics");
+        }
 
         public List<PurchaseOrder> GetPurchaseOrders()
         {
