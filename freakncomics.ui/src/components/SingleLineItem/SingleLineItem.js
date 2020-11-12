@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductData from '../../helpers/data/ProductData';
+import PurchaseOrderData from '../../helpers/data/PurchaseOrderData';
 import LineItemShape from '../../helpers/propz/LineItemShape';
 
 class SingleLineItem extends React.Component {
@@ -18,6 +19,10 @@ class SingleLineItem extends React.Component {
           this.setState({ product: resp });
         })
         .catch((err) => console.error(err));
+    }
+
+    removeLineItemFromCart = () => {
+      PurchaseOrderData.removeLineItem();
     }
 
     componentDidMount() {
@@ -49,6 +54,7 @@ class SingleLineItem extends React.Component {
           <div className="col">
           {lineItem.lineItemQuantity}
           </div>
+          <button className="remove-item-btn btn btn-danger mb-2" onClick={() => this.removeLineItemFromCart(lineItem.lineItemId)}> <i className="fas fa-trash"></i> </button>
         </div>
       </div>
       );

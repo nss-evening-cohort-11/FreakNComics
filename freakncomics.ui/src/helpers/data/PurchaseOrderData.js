@@ -13,5 +13,7 @@ const getCompletePurchaseOrder = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const removeLineItem = (orderId, itemId) => axios.delete(`${baseUrl}/orders/${orderId}/items/${itemId}`);
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getLineItemsByPurchaseOrderId, getCompletePurchaseOrder };
+export default { getLineItemsByPurchaseOrderId, getCompletePurchaseOrder, removeLineItem };
