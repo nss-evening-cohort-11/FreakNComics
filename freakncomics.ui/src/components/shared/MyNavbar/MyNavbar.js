@@ -1,6 +1,7 @@
 import React from 'react';
 import './MyNavbar.scss';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink as RRNavLink } from 'react-router-dom';
+import { NavLink } from 'reactstrap';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
 import ProductCategoriesCollapse from '../ProductCategoriesCollapse/ProductCategoriesCollapse';
@@ -36,8 +37,9 @@ class MyNavbar extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a className="navbar-brand" href="#">Freak 'N Comics</a>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <NavLink className="navbar-brand" tag={RRNavLink} to="/">Freak 'N Comics</NavLink>
+
       <button
         className="navbar-toggler"
         type="button"
@@ -52,31 +54,29 @@ class MyNavbar extends React.Component {
       <div className="collapse navbar-collapse d-flex justify-content-between navbarContent" id="navbarContent">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <h4><a href="/">Home</a></h4>
+            <NavLink tag={RRNavLink} to="/">Account</NavLink>
           </li>
           <li className="nav-item">
-            <h4><a href="#">Account</a></h4>
-          </li>
-          <li className="nav-item">
-            <h4><a href="#">Cart</a></h4>
+            <NavLink tag={RRNavLink} to="/shopping-cart">Cart</NavLink>
           </li>
           <li className="nav-item">
             <ProductCategoriesCollapse/>
           </li>
         </ul>
+
         <form className="form-inline my-2 my-lg-0">
-      <input
-        className="form-control mr-sm-2"
-        id="userInput"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        value={ this.state.value.inputValue}
-        onChange={this.changingField}
-        >
-      </input>
-      <button id="submitButton" onClick={this.enterResponse} >search</button>
-      </form>
+          <input
+            className="form-control mr-sm-2"
+            id="userInput"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            value={ this.state.value.inputValue}
+            onChange={this.changingField}
+            >
+          </input>
+          <button id="submitButton" onClick={this.enterResponse} >search</button>
+        </form>
       </div>
     </nav>
     );
