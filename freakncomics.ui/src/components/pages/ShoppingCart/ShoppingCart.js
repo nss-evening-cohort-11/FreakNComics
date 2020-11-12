@@ -30,16 +30,21 @@ componentDidMount() {
 }
 
 render() {
-  const { lineItems } = this.state;
+  const { lineItems, activeOrder } = this.state;
   const buildLineItems = lineItems.map((lineItem, index) => (
-    <SingleLineItem key={index} lineItem={lineItem} />
+    <SingleLineItem key={index} lineItem={lineItem} activeOrder={activeOrder} />
   ));
+
   return (
       <div className="lineItems container mt-5">
         <h2 className="shopping-cart d-flex flex-wrap justify-content-around mt-5 mb-3">
           Your Cart:
         </h2>
       {buildLineItems}
+        <h3 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+          Your Total:
+        $ {activeOrder.total}
+        </h3>
       </div>
   );
 }
