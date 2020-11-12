@@ -4,7 +4,6 @@ import {
   CardBody,
   Card,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
 
 import ProductData from '../../../helpers/data/ProductData';
 import ProductTypeData from '../../../helpers/data/ProductTypeData';
@@ -54,6 +53,7 @@ class ProductCategoriesCollapse extends React.Component {
 
     return (
       <div className="ProductCategoriesCollapse d-flex justify-content-center flex-column">
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a className="categoriesButton" onClick={this.toggle}><h4>Product Categories</h4></a>
         <Collapse isOpen={isOpen}>
           <Card className="col MyCard">

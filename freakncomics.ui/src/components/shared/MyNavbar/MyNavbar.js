@@ -5,7 +5,6 @@ import { NavLink } from 'reactstrap';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
 import ProductCategoriesCollapse from '../ProductCategoriesCollapse/ProductCategoriesCollapse';
-// import ShoppingCart from '../../pages/ShoppingCart/ShoppingCart';
 
 class MyNavbar extends React.Component {
   state = {
