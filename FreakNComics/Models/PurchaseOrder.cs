@@ -11,7 +11,6 @@ namespace FreakNComics.Models
         public int PurchaseOrderId { get; set; }
         public int UserId { get; set; }
         public DateTime  InvoiceDate { get; set; }
-        public int PaymentTypeId { get; set; }
         public decimal Total { get; set; }
         public bool IsComplete { get; set; }
     }
