@@ -1,5 +1,8 @@
 import React from 'react';
+// import _ from 'lodash';
+
 import ProductData from '../../../helpers/data/ProductData';
+import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './SingleProduct.scss';
 
 class SingleProduct extends React.Component {
@@ -17,6 +20,16 @@ class SingleProduct extends React.Component {
 
   componentDidMount() {
     this.getProduct();
+  }
+
+  addToShoppingCart = () => {
+    const { product } = this.state;
+    // todo: get the userId from auth
+    // in the meantime, we'll use this hardcoded userId
+    const userId = 3;
+    PurchaseOrderData.addToCart(userId, product)
+      .then((resp) => window.alert(`${product.title} successfully added to your cart`)) //eslint-disable-line
+      .catch((err) => console.error('could not get orders for user'));
   }
 
   render() {
@@ -39,7 +52,7 @@ class SingleProduct extends React.Component {
             <p>Product Description: {product.description}</p>
             {
               product.inStock
-                ? <button className="btn btn-outline-primary"><i className="fas fa-shopping-cart"></i> Add to cart</button>
+                ? <button className="btn btn-outline-primary" onClick={this.addToShoppingCart}><i className="fas fa-shopping-cart"></i> Add to cart</button>
                 : <button className="btn btn-outline-primary" disabled><i className="fas fa-shopping-cart"></i> Add to cart</button>
             }
           </div>
