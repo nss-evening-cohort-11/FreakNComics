@@ -13,11 +13,11 @@ namespace FreakNComics.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        UsersRepository _repo;
+        readonly UsersRepository _repo;
 
-        public UsersController()
+        public UsersController(UsersRepository repo)
         {
-            _repo = new UsersRepository();
+            _repo = repo;
         }
 
         [HttpGet]

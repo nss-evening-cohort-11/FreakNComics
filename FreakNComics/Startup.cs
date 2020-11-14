@@ -32,6 +32,10 @@ namespace FreakNComics
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient<OrderRepository>();
+            services.AddTransient<ProductsRepository>();
+            services.AddTransient<ProductTypeRepository>();
+            services.AddTransient<UsersRepository>();
+            services.AddTransient<PaymentTypeRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

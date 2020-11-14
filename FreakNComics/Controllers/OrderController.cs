@@ -15,7 +15,7 @@ namespace FreakNComics.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        OrderRepository _repo;
+        readonly OrderRepository _repo;
         public OrderController(OrderRepository repo)
         {
             _repo = repo;

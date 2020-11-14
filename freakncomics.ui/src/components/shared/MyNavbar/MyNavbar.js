@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
 import ProductCategoriesCollapse from '../ProductCategoriesCollapse/ProductCategoriesCollapse';
+import UsersData from '../../../helpers/data/UsersData';
 
 class MyNavbar extends React.Component {
   state = {
@@ -43,6 +44,9 @@ class MyNavbar extends React.Component {
     e.preventDefault();
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
+    UsersData.GetLoggedInUser()
+      .then((response) => console.log(response))
+      .catch((err) => console.error('could not get user', err));
   }
 
   redirectHome = () => {
