@@ -1,38 +1,20 @@
 import React from 'react';
-import ProductData from '../../helpers/data/ProductData';
-import LineItemShape from '../../helpers/propz/LineItemShape';
+import LineItemWithProductShape from '../../helpers/propz/LineItemWithProductShape';
 
 class SingleLineItem extends React.Component {
     static propTypes = {
-      lineItem: LineItemShape.LineItemShape,
-    }
-
-    state = {
-      product: {},
-    }
-
-    getProductbyLineItemId = () => {
-      const { lineItem } = this.props;
-      ProductData.getSingleProduct(lineItem.productId)
-        .then((resp) => {
-          this.setState({ product: resp });
-        })
-        .catch((err) => console.error(err));
-    }
-
-    componentDidMount() {
-      this.getProductbyLineItemId();
+      lineItem: LineItemWithProductShape.LineItemWithProductShape,
     }
 
     removingLineItem = (e) => {
       e.preventDefault();
       const { lineItem, removeLineItem } = this.props;
+      console.error(this.props);
       removeLineItem(lineItem.purchaseOrderId, lineItem.lineItemId);
     }
 
     render() {
       const { lineItem } = this.props;
-      const { product } = this.state;
 
       return (
       <div className="SingleLineItem container">
@@ -41,7 +23,7 @@ class SingleLineItem extends React.Component {
          Product:
           </h5>
           <div className="col">
-          {product.title}
+          {lineItem.title}
           </div>
           <h5>
           Unit Price:

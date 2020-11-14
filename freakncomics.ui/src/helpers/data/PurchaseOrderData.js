@@ -14,6 +14,12 @@ const getLineItemsByPurchaseOrderId = (orderId) => new Promise((resolve, reject)
     .catch((err) => reject(err));
 });
 
+const getLineItemsWithProducts = (orderId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/lineitemwithproduct/${orderId}/items`)
+    .then((response) => resolve(response.data))
+    .catch((err) => reject(err));
+});
+
 const getCompletePurchaseOrder = (userId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/orders/active-orders/${userId}`)
     .then((response) => resolve(response.data))
@@ -23,5 +29,5 @@ const getCompletePurchaseOrder = (userId) => new Promise((resolve, reject) => {
 const removeLineItem = (id, itemId) => axios.delete(`${baseUrl}/orders/${id}/items/${itemId}`);
 
 export default {
-  addToCart, getLineItemsByPurchaseOrderId, getCompletePurchaseOrder, removeLineItem,
+  addToCart, getLineItemsByPurchaseOrderId, getCompletePurchaseOrder, removeLineItem, getLineItemsWithProducts,
 };

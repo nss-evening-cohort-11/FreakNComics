@@ -17,7 +17,7 @@ GetShoppingCartOrderandItems = () => {
   PurchaseOrderData.getCompletePurchaseOrder(userId)
     .then((resp) => {
       this.setState({ activeOrder: resp });
-      PurchaseOrderData.getLineItemsByPurchaseOrderId(resp.purchaseOrderId)
+      PurchaseOrderData.getLineItemsWithProducts(resp.purchaseOrderId)
         .then((response) => {
           this.setState({ lineItems: response });
         });
