@@ -21,6 +21,8 @@ namespace FreakNComics.Controllers
             _repo = repo;
         }
 
+        // PURCHASE ORDER METHODS
+
         [HttpPost]
         public IActionResult CreatePurchaseOrder(PurchaseOrder order)
         {
@@ -47,16 +49,45 @@ namespace FreakNComics.Controllers
             return Ok(order);
         }
 
+        // SEARCH FOR ACTIVE ORDERS BY SPECIFIC USER
         [HttpGet("active-orders/{userId}")]
         public IActionResult GetActiveOrdersByUserId(int userId)
         {
             var activeOrder = _repo.GetActivePurchaseOrderByUserId(userId);
 
-            if (activeOrder == null) return NotFound();
+            if (activeOrder == null) return NoContent();
 
             return Ok(activeOrder);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
+        {
+            if (_repo.GetPurchaseOrderById(id) == null)
+            {
+                return NotFound();
+            }
+
+            var updatedOrder = _repo.Update(id, purchaseOrder);
+
+            return Ok(updatedOrder);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOrder(int id)
+        {
+            if (_repo.GetPurchaseOrderById(id) == null)
+            {
+                return NotFound();
+            }
+
+            _repo.Remove(id);
+
+            return Ok();
+        }
+
+
+        // LINE ITEM METHODS
 
         [HttpGet("{id}/items")]
         public IActionResult GetOrderItems(int id)
@@ -102,54 +133,88 @@ namespace FreakNComics.Controllers
             {
                 return Unauthorized("Order is already completed");
             }
-
+            var updatedItems = _repo.GetLineItems(id).ToList();
+            _repo.UpdatePurchaseOrderTotal(id, updatedItems);
             return Ok();
         }
 
-        [HttpPost("{id}/items")]
-        public IActionResult CreateLineItem(int id, LineItem item)
+        // ADD LINE ITEM TO PO
+        [HttpPost("{orderId}/items")]
+        public IActionResult CreateLineItem(int orderId, LineItem item)
         {
-            var items = _repo.GetLineItems(id).ToArray();
+            var items = _repo.GetLineItems(orderId);
 
-            for (int i = 0; i < items.Count(); i++)
+            var existingLineItem = items.Where(li => li.ProductId == item.ProductId).ToList();
+
+            if (existingLineItem.Count > 0)
             {
-                if (items[i].ProductId == item.ProductId)
-                    {
-                    return Unauthorized("Product already in cart");
-                    // todo: should this be updated to a patch request to update the lineItem quantity for the specific PO?
-                    }
+                var updatedLineItemQuantity = patchLineItemQuantity(existingLineItem[0].LineItemId);
+                var updatedItems = _repo.GetLineItems(orderId).ToList();
+                _repo.UpdatePurchaseOrderTotal(orderId, updatedItems);
+                return updatedLineItemQuantity;
             }
 
-            _repo.AddItem(id, item);
+            _repo.AddItem(orderId, item);
 
-            return Created($"/api/orders/{id}/items/{item.LineItemId}", item);
+            return Created($"/api/orders/{orderId}/items/{item.LineItemId}", item);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
+
+
+        // IF PRODUCT EXISTS ON PO, UPDATE QUANTITY ON LINE ITEM
+        [HttpPatch]
+        public IActionResult patchLineItemQuantity(int lineItemId)
         {
-            if (_repo.GetPurchaseOrderById(id) == null)
-            {
-                return NotFound();
-            }
-
-            var updatedOrder = _repo.Update(id, purchaseOrder);
-
-            return Ok(updatedOrder);
-
+            var updatedQuantity = _repo.IncreaseLineItemQuantity(lineItemId);
+            return Ok(updatedQuantity);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteOrder(int id)
+
+        [HttpPut("cart/{userId}")]
+        public IActionResult AddToCart(int userId, Products product)
         {
-            if(_repo.GetPurchaseOrderById(id) == null)
+            var usersActiveOrder = _repo.GetActivePurchaseOrderByUserId(userId);
+
+            // Logic if user does not have an active order 
+            if (usersActiveOrder == null)
             {
-                return NotFound();
+                var newOrderToAdd = new PurchaseOrder
+                {
+                    UserId = userId,
+                    InvoiceDate = DateTime.Now,
+                    Total = 0,
+                    IsComplete = false,
+                };
+
+                var newOrder = _repo.Add(newOrderToAdd);
+
+                var lineItemToAdd = new LineItem
+                {
+                    PurchaseOrderId = newOrder.PurchaseOrderId,
+                    ProductId = product.ProductId,
+                    UnitPrice = product.Price,
+                    LineItemQuantity = 1,
+                };
+
+                CreateLineItem(newOrder.PurchaseOrderId, lineItemToAdd);
+                
+                return Ok("Created new order");
             }
+            // Logic if user has an active order already
+            else
+            {
+                var lineItemToAdd = new LineItem
+                {
+                    PurchaseOrderId = usersActiveOrder.PurchaseOrderId,
+                    ProductId = product.ProductId,
+                    UnitPrice = product.Price,
+                    LineItemQuantity = 1,
+                };
 
-            _repo.Remove(id);
+                CreateLineItem(usersActiveOrder.PurchaseOrderId, lineItemToAdd);
 
-            return Ok();
+                return Ok("Added product to existing user order");
+            };
         }
     }
 }

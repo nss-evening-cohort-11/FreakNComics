@@ -1,32 +1,20 @@
 import React from 'react';
-import ProductData from '../../helpers/data/ProductData';
-import LineItemShape from '../../helpers/propz/LineItemShape';
+import LineItemWithProductShape from '../../helpers/propz/LineItemWithProductShape';
 
 class SingleLineItem extends React.Component {
     static propTypes = {
-      lineItem: LineItemShape.LineItemShape,
+      lineItem: LineItemWithProductShape.LineItemWithProductShape,
     }
 
-    state = {
-      product: {},
-    }
-
-    getProductbyLineItemId = () => {
-      const { lineItem } = this.props;
-      ProductData.getSingleProduct(lineItem.productId)
-        .then((resp) => {
-          this.setState({ product: resp });
-        })
-        .catch((err) => console.error(err));
-    }
-
-    componentDidMount() {
-      this.getProductbyLineItemId();
+    removingLineItem = (e) => {
+      e.preventDefault();
+      const { lineItem, removeLineItem } = this.props;
+      console.error(this.props);
+      removeLineItem(lineItem.purchaseOrderId, lineItem.lineItemId);
     }
 
     render() {
       const { lineItem } = this.props;
-      const { product } = this.state;
 
       return (
       <div className="SingleLineItem container">
@@ -35,7 +23,7 @@ class SingleLineItem extends React.Component {
          Product:
           </h5>
           <div className="col">
-          {product.title}
+          {lineItem.title}
           </div>
           <h5>
           Unit Price:
@@ -49,6 +37,7 @@ class SingleLineItem extends React.Component {
           <div className="col">
           {lineItem.lineItemQuantity}
           </div>
+          <button className="remove-item-btn btn btn-danger mb-2" onClick={this.removingLineItem}> <i className="fas fa-trash"></i> </button>
         </div>
       </div>
       );

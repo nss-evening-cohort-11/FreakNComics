@@ -57,20 +57,20 @@ namespace FreakNComics.Data
             return activeOrder;
         }
 
-        public List<LineItem> GetLineItems(int id)
+        public IEnumerable<LineItem> GetLineItems(int orderId)
         {
             using var db = new SqlConnection(_connectionString);
 
             var query = @$"select *
                            from LineItem
                            where PurchaseOrderId = @Id";
-            var parameters = new { Id = id };
+            var parameters = new { Id = orderId };
 
             var items = db.Query<LineItem>(query, parameters);
 
-            return items.ToList();
+            return items;
         }
-
+        
         public LineItem GetLineItemById(int purchaseOrderId, int id)
         {
             using var db = new SqlConnection(_connectionString);
@@ -88,28 +88,29 @@ namespace FreakNComics.Data
             return item;
         }
 
-        public void Add(PurchaseOrder orderToAdd)
+        public PurchaseOrder Add(PurchaseOrder orderToAdd)
         {
             var sql = @"INSERT INTO [dbo].[PurchaseOrder]
                        ([UserId]
                        ,[InvoiceDate]
-                       ,[PaymentTypeId]
                        ,[Total]
                        ,[IsComplete])
 	             Output inserted.PurchaseOrderId
                  VALUES
-                       (@userid, @invoicedate, @paymenttypeid, @total, @iscomplete)";
+                       (@userid, @invoicedate, @total, @iscomplete)";
 
             using var db = new SqlConnection(_connectionString);
 
             var newId = db.ExecuteScalar<int>(sql, orderToAdd);
 
             orderToAdd.PurchaseOrderId = newId;
+            return orderToAdd;
         }
 
-        public void AddItem(int id, LineItem itemToAdd)
+        // ADD LINE ITEM TO PO
+        public void AddItem(int orderId, LineItem itemToAdd)
         {
-            itemToAdd.PurchaseOrderId = id;
+            itemToAdd.PurchaseOrderId = orderId;
 
             var sql = @"INSERT INTO [dbo].[LineItem]
                        ([PurchaseOrderId]
@@ -137,25 +138,31 @@ namespace FreakNComics.Data
 
             var updatePurchaseOrder = db.Query<LineItem>(getLineItems, parameters).ToList();
 
-            decimal total = 0;
+            UpdatePurchaseOrderTotal(orderId, updatePurchaseOrder);
+        }
 
-            updatePurchaseOrder.ForEach((Item) => {
+        // UPDATE TOTAL ON PO
+        public void UpdatePurchaseOrderTotal(int purchaseOrderId, List<LineItem> lineItemsOnOrder)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            decimal total = 0;
+            lineItemsOnOrder.ForEach((Item) => {
                 total += Item.UnitPrice * Item.LineItemQuantity;
             });
 
-            var updateOrder = @"UPDATE [dbo].[PurchaseOrder]
+            var query = @"UPDATE [dbo].[PurchaseOrder]
                                 SET [Total] = @total
                                 Output inserted.*
                                 WHERE PurchaseOrderId = @purchaseOrderId";
 
-            var newParams = new
+            var parameters = new
             {
                 total,
-                itemToAdd.PurchaseOrderId
+                purchaseOrderId
             };
 
-            var totalPurchaseOrder = db.Query<LineItem>(updateOrder, newParams);
-
+            var updatedPurchaseOrderTotal = db.Query<LineItem>(query, parameters);
         }
 
         public LineItem UpdateLineItem(int id, int itemId, LineItem item)
@@ -182,12 +189,32 @@ namespace FreakNComics.Data
             return null;
         }
 
+        // UPDATE QUANTITY ON LINE ITEM
+        public int IncreaseLineItemQuantity(int lineItemId)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @"UPDATE [dbo].[LineItem]
+                           SET [LineItemQuantity] = LineItemQuantity + 1
+                           output inserted.LineItemQuantity
+                           WHERE LineItemId = @id";
+
+            var parameters = new
+            {
+                // todo: change the quantity incrementer to a variable
+                id = lineItemId
+            };
+
+            var updatedQuantity = db.QueryFirstOrDefault<int>(query, parameters);
+
+            return updatedQuantity;
+        }
+
         public PurchaseOrder Update(int id, PurchaseOrder order)
         {
             var sql = @"UPDATE [dbo].[PurchaseOrder]
                         SET [UserId] = @userid
                             ,[InvoiceDate] = @invoicedate
-                            ,[PaymentTypeId] = @paymenttypeid
                             ,[Total] = @total
                         Output inserted.*
                         WHERE PurchaseOrderId = @id";
@@ -198,7 +225,6 @@ namespace FreakNComics.Data
             {
                 order.UserId,
                 order.InvoiceDate,
-                order.PaymentTypeId,
                 order.Total,
                 id
             };

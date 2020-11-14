@@ -17,7 +17,7 @@ GetShoppingCartOrderandItems = () => {
   PurchaseOrderData.getCompletePurchaseOrder(userId)
     .then((resp) => {
       this.setState({ activeOrder: resp });
-      PurchaseOrderData.getLineItemsByPurchaseOrderId(resp.purchaseOrderId)
+      PurchaseOrderData.getLineItemsWithProducts(resp.purchaseOrderId)
         .then((response) => {
           this.setState({ lineItems: response });
         });
@@ -29,10 +29,16 @@ componentDidMount() {
   this.GetShoppingCartOrderandItems();
 }
 
+removeLineItemFromCart = (id, itemId) => {
+  PurchaseOrderData.removeLineItem(id, itemId)
+    .then(() => this.GetShoppingCartOrderandItems())
+    .catch((error) => console.error(error));
+}
+
 render() {
   const { lineItems, activeOrder } = this.state;
   const buildLineItems = lineItems.map((lineItem, index) => (
-    <SingleLineItem key={index} lineItem={lineItem} activeOrder={activeOrder} />
+    <SingleLineItem key={index} lineItem={lineItem} activeOrder={activeOrder} removeLineItem={this.removeLineItemFromCart} />
   ));
 
   return (
