@@ -64,7 +64,7 @@ namespace FreakNComics.Data
 
             return items;
         }
-
+        
         public LineItem GetLineItemById(int purchaseOrderId, int id)
         {
             using var db = new SqlConnection(_connectionString);
