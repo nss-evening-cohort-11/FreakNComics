@@ -54,7 +54,7 @@ class MyNavbar extends React.Component {
       <div className="collapse navbar-collapse d-flex justify-content-between navbarContent" id="navbarContent">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <NavLink tag={RRNavLink} to="/">Account</NavLink>
+            <NavLink tag={RRNavLink} to="/user-profile">Profile</NavLink>
           </li>
           <li className="nav-item">
             <NavLink tag={RRNavLink} to="/shopping-cart">Cart</NavLink>
