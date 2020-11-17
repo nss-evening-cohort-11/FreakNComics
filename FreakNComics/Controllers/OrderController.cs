@@ -13,6 +13,7 @@ namespace FreakNComics.Controllers
 {
     [Route("api/orders")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         readonly OrderRepository _repo;

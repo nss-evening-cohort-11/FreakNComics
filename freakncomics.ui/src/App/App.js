@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 
 import ProductData from '../helpers/data/ProductData';
+import Register from '../components/pages/Register/Register';
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
@@ -69,6 +70,7 @@ class App extends React.Component {
           <MyNavbar handleSubmit={this.handleSubmit} handleChange={this.handleChange} authed={authed}/>
             <Switch>
               <Route path='/products/:productId' component={ SingleProduct }/>
+              <Route path='/register' component={Register}/>
               <Route path='/shopping-cart' component={ShoppingCart}/>
               <Route path='/' component={() => <Home products={this.state.products}/> } />
               <Redirect from="*" to="/" />

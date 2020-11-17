@@ -7,7 +7,6 @@ import { NavLink } from 'reactstrap';
 import PropTypes from 'prop-types';
 import props from '../../../helpers/propz/ValueShape';
 import ProductCategoriesCollapse from '../ProductCategoriesCollapse/ProductCategoriesCollapse';
-import AuthData from '../../../helpers/data/AuthData';
 
 class MyNavbar extends React.Component {
   state = {
@@ -21,7 +20,6 @@ class MyNavbar extends React.Component {
     handleChange: PropTypes.func.isRequired,
     searchRedirect: PropTypes.func.isRequired,
     history: PropTypes.func.isRequired,
-    authed: PropTypes.bool.isRequired,
   }
 
   changingField = (e) => {
@@ -35,27 +33,11 @@ class MyNavbar extends React.Component {
     this.props.handleSubmit(e);
   }
 
-  logMeOut = (e) => {
-    e.preventDefault();
-    firebase.auth().signOut();
-  }
-
-  loginClickEvent = (e) => {
-    e.preventDefault();
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-    AuthData.GetLoggedInUser()
-      .then((response) => console.log(response))
-      .catch((err) => console.error('could not get user', err));
-  }
-
   redirectHome = () => {
     this.props.history();
   }
 
   render() {
-    const { authed } = this.props;
-
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <NavLink className="navbar-brand" tag={RRNavLink} to="/">Freak 'N Comics</NavLink>
@@ -80,15 +62,11 @@ class MyNavbar extends React.Component {
             <NavLink tag={RRNavLink} to="/shopping-cart">Cart</NavLink>
           </li>
           <li className="nav-item">
-            <ProductCategoriesCollapse/>
+            <NavLink tag={RRNavLink} to="/register">Register</NavLink>
           </li>
           <li className="nav-item">
-            {
-              authed
-                ? <button className="btn btn-danger" onClick={this.logMeOut}>Logout</button>
-                : <button className="btn btn-primary" onClick={this.loginClickEvent}>Login</button>
-            }
-            </li>
+            <ProductCategoriesCollapse/>
+          </li>
         </ul>
 
         <form className="form-inline my-2 my-lg-0">

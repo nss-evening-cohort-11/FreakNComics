@@ -2,6 +2,8 @@ import firebase from 'firebase';
 import axios from 'axios';
 import { baseUrl } from './constants.json';
 
+// interceptors work by changing the outbound request before the xhr is sent
+// or by changing the response before it's returned to our .then() method.
 axios.interceptors.request.use((request) => {
   const token = sessionStorage.getItem('token');
 
@@ -12,11 +14,27 @@ axios.interceptors.request.use((request) => {
   return request;
 }, (err) => Promise.reject(err));
 
-const registerUser = (user) => firebase.auth().signInWithPopup(user.email).then((cred) => {
+const registerUser = (user) => firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((cred) => {
+  // get email from firebase
   const userInfo = { email: cred.user.email };
+
+  // get token from firebase
   cred.user.getIdToken()
+  // save the token to the session storage
     .then((token) => sessionStorage.setItem('token', token))
+  // save the user to the the api
     .then(() => axios.post(`${baseUrl}/users`, userInfo));
 });
+const loginUser = (user) => firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((cred) => {
+  // get token from firebase
+  cred.user.getIdToken()
+    // save the token to the session storage
+    .then((token) => sessionStorage.setItem('token', token));
+});
+const logoutUser = () => firebase.auth().signOut();
 
-export default { registerUser };
+const getUid = () => firebase.auth().currentUser.uid;
+
+export default {
+  getUid, loginUser, logoutUser, registerUser,
+};
