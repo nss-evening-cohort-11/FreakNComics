@@ -8,7 +8,7 @@ class UserProfile extends React.Component {
   }
 
   getUserForProfile = () => {
-    const userId = 2;
+    const userId = 3;
     UserData.getUserByUserId(userId)
       .then((resp) => {
         this.setState({ user: resp });
