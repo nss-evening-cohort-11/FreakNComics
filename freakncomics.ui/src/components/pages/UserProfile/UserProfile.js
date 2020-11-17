@@ -25,7 +25,7 @@ class UserProfile extends React.Component {
   render() {
     const { user } = this.state;
     return (
-      <div className="UserProfile  col-6 offset-6">
+      <div className="UserProfile text-center col-6 offset-3">
         <h2> User Profile </h2>
         <h4> {user.firstName} {user.lastName}  </h4>
         <p> {user.email} </p>
