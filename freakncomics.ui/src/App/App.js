@@ -12,6 +12,7 @@ import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
 import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
+import Login from '../components/pages/Login/Login';
 
 class App extends React.Component {
   state = {
@@ -49,6 +50,7 @@ class App extends React.Component {
             <Switch>
               <Route path='/products/:productId' component={ SingleProduct }/>
               <Route path='/shopping-cart' component={ShoppingCart}/>
+              <Route path='/login' component={Login}/>
               <Route path='/' component={() => <Home products={this.state.products}/> } />
               <Redirect from="*" to="/" />
             </Switch>
