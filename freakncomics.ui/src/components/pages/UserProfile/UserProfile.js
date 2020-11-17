@@ -30,7 +30,7 @@ class UserProfile extends React.Component {
         <h4> {user.firstName} {user.lastName}  </h4>
         <p> {user.email} </p>
         <p> {user.phone} </p>
-        <p> {user.StreetAddress} </p>
+        <p> {user.streetAddress} </p>
         <p> {user.city}, {user.state}, {user.zipCode} </p>
       </div>
     );
