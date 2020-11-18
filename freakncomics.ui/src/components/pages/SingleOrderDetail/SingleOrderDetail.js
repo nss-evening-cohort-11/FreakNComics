@@ -1,3 +1,4 @@
+import { forEach } from 'lodash';
 import React from 'react';
 import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './SingleOrderDetail.scss';
@@ -5,7 +6,7 @@ import './SingleOrderDetail.scss';
 class SingleOrderDetail extends React.Component {
   state = {
     order: [],
-    lineItem: [],
+    lineItems: [{}],
   }
 
   getOrderByOrderId = () => {
@@ -18,7 +19,7 @@ class SingleOrderDetail extends React.Component {
   getLineItems = () => {
     const { orderId } = this.props.match.params;
     PurchaseOrderData.getLineItemsWithProducts(orderId)
-      .then((response) => this.setState({ lineItem: response }))
+      .then((response) => this.setState({ lineItems: response }))
       .catch((err) => console.error(err));
   }
 
@@ -28,15 +29,16 @@ class SingleOrderDetail extends React.Component {
   }
 
   render() {
-    const { order, lineItem } = this.state;
-    console.error(order, lineItem);
+    const { order, lineItems } = this.state;
+    console.error(order, lineItems);
+    const buildSingleItem = lineItems.map((lineItem) => (<h3 className="Product Title text center"> {lineItem.title} </h3>));
     return (
       <div className="OrderDetail col-6 offset-6">
            Order Detail page
         <div className="row">
           <div className="SingleOrder-details">
-          <h2> {lineItem.title} </h2>
-          <p> {order.title} </p>
+          {buildSingleItem}
+          <p> {order.total} </p>
           </div>
         </div>
       </div>
