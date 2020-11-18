@@ -10,14 +10,14 @@ class UserProfile extends React.Component {
   }
 
   getUserForProfile = () => {
-    const userId = 3;
+    const userId = 2;
     UserData.getUserByUserId(userId)
       .then((resp) => this.setState({ user: resp }))
       .catch((err) => console.error('could not get user', err));
   }
 
   getUserOrderHistory = () => {
-    const userId = 3;
+    const userId = 2;
     UserData.getCompletedOrdersByUserId(userId)
       .then((resp) => this.setState({ orderHistory: resp }))
       .catch((err) => console.error('could not get completed orders for user', err));
