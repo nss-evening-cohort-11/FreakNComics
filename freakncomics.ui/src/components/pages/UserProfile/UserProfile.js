@@ -5,21 +5,26 @@ import UserData from '../../../helpers/data/UserData';
 class UserProfile extends React.Component {
   state = {
     user: {},
+    orderHistory: [],
   }
 
   getUserForProfile = () => {
     const userId = 3;
     UserData.getUserByUserId(userId)
-      .then((resp) => {
-        this.setState({ user: resp });
-        console.error('resp', resp);
-      })
+      .then((resp) => this.setState({ user: resp }))
       .catch((err) => console.error('could not get user', err));
-    console.error('user', this.state);
+  }
+
+  getUserOrderHistory = () => {
+    const userId = 3;
+    UserData.getCompletedOrdersByUserId(userId)
+      .then((resp) => this.setState({ orderHistory: resp }))
+      .catch((err) => console.error('could not get completed orders for user', err));
   }
 
   componentDidMount() {
     this.getUserForProfile();
+    this.getUserOrderHistory();
   }
 
   render() {
