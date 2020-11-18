@@ -14,6 +14,7 @@ import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
 import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 import UserProfile from '../components/pages/UserProfile/UserProfile';
 import Login from '../components/pages/Login/Login';
+import SingleOrderDetail from '../components/pages/SingleOrderDetail/SingleOrderDetail';
 
 class App extends React.Component {
   state = {
@@ -50,6 +51,7 @@ class App extends React.Component {
           <MyNavbar handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
             <Switch>
               <Route path='/products/:productId' component={ SingleProduct }/>
+              <Route path='/order/:orderId' component={SingleOrderDetail}/>
               <Route path='/user-profile' component={UserProfile}/>
               <Route path='/shopping-cart' component={ShoppingCart}/>
               <Route path='/login' component={Login}/>
