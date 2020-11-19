@@ -34,15 +34,23 @@ class UserProfile extends React.Component {
     const buildOrderHistory = orderHistory.map((order, index) => <Orders key={index} order={order} user={user}/>);
 
     return (
-      <div className="UserProfile text-center col-6 offset-3">
-        <div className="user-profile-container">
-          <h2> User Profile </h2>
-          <h4> {user.firstName} {user.lastName}  </h4>
-          <p> {user.email} </p>
-          <p> {user.phone} </p>
-          <p> {user.streetAddress} </p>
-          <p> {user.city}, {user.state}, {user.zipCode} </p>
-        </div>
+      <div className="UserProfile col-10 offset-1">
+        <h2 class="my-3">User Profile</h2>
+          <div className="user-profile-container">
+            <h4 class="col-12 user-name">{user.firstName} {user.lastName}</h4>
+            <div className="user-contact-info d-flex flex-row">
+              <div className="user-details col-6">
+              <p><strong>Contact Info:</strong></p>
+                <p><strong>Phone:</strong> {user.email}</p>
+                <p><strong>Email:</strong> {user.phone}</p>
+              </div>
+              <div className="user-address col-6">
+                <p><strong>Address:</strong></p>
+                <p>{user.streetAddress}</p>
+                <p>{user.city}, {user.state}, {user.zipCode}</p>
+              </div>
+            </div>
+          </div>
         <h2 className="my-3">Order History</h2>
         {buildOrderHistory}
       </div>
