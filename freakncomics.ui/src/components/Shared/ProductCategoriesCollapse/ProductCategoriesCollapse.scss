@@ -1,4 +1,14 @@
 .ProductCategoriesCollapse {
   display: inline;
+}
 
+.categoriesButton {
+  padding: 8px;
+  text-decoration: none;
+  color: #FFFFFF80;
+}
+
+.categoriesButton:hover {
+  text-decoration: none !important;
+  color: white;
 }

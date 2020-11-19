@@ -55,8 +55,12 @@ class MyNavbar extends React.Component {
 
       <div className="collapse navbar-collapse d-flex justify-content-between navbarContent" id="navbarContent">
         <ul className="navbar-nav">
+          {/* TODO: add ternary operated that displays login navlink if user is unauthed and account navlink if user is authed */}
           <li className="nav-item">
-            <NavLink tag={RRNavLink} to="/">Account</NavLink>
+            <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink tag={RRNavLink} to="/user-profile">Profile</NavLink>
           </li>
           <li className="nav-item">
             <NavLink tag={RRNavLink} to="/shopping-cart">Cart</NavLink>

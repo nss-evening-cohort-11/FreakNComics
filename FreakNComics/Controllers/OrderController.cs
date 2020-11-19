@@ -61,6 +61,17 @@ namespace FreakNComics.Controllers
             return Ok(activeOrder);
         }
 
+        [HttpGet("order-history/{userId}")]
+        public IActionResult GetCompletedOrderHistoryByUserId(int userId)
+        {
+            var orderHistory = _repo.GetCompletedOrdersByUserId(userId);
+
+            if (orderHistory == null) return NoContent();
+
+            return Ok(orderHistory);
+
+        }
+
         [HttpPut("{id}")]
         public IActionResult UpdateOrder(int id, PurchaseOrder purchaseOrder)
         {

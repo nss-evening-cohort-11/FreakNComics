@@ -16,6 +16,9 @@ import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import Home from '../components/pages/Home/Home';
 import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
 import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
+import UserProfile from '../components/pages/UserProfile/UserProfile';
+import Login from '../components/pages/Login/Login';
+import SingleOrderDetail from '../components/pages/SingleOrderDetail/SingleOrderDetail';
 
 import fbConnection from '../helpers/data/connection';
 
@@ -71,7 +74,10 @@ class App extends React.Component {
             <Switch>
               <Route path='/products/:productId' component={ SingleProduct }/>
               <Route path='/register' component={Register}/>
+              <Route path='/order/:orderId' component={SingleOrderDetail}/>
+              <Route path='/user-profile' component={UserProfile}/>
               <Route path='/shopping-cart' component={ShoppingCart}/>
+              <Route path='/login' component={Login}/>
               <Route path='/' component={() => <Home products={this.state.products}/> } />
               <Redirect from="*" to="/" />
             </Switch>

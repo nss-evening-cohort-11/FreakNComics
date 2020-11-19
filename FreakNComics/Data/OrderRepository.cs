@@ -57,6 +57,22 @@ namespace FreakNComics.Data
             return activeOrder;
         }
 
+        public IEnumerable<PurchaseOrder> GetCompletedOrdersByUserId(int userId)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var query = @"select *
+                            from PurchaseOrder
+                            where UserId = @uid 
+                            AND IsComplete = 1";
+
+            var parameters = new { uid = userId };
+
+            var orderHistory = db.Query<PurchaseOrder>(query, parameters);
+
+            return orderHistory;
+        }
+
         public IEnumerable<LineItem> GetLineItems(int orderId)
         {
             using var db = new SqlConnection(_connectionString);
