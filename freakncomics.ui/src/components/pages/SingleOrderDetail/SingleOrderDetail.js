@@ -29,8 +29,7 @@ class SingleOrderDetail extends React.Component {
   }
 
   render() {
-    const { order, lineItems } = this.state;
-    console.error(order, lineItems);
+    const { lineItems } = this.state;
     const buildSingleItem = lineItems.map((lineItem) => (
       <SingleOrderDetailCard key={lineItem.lineItemId} lineItem={lineItem} />
     ));
