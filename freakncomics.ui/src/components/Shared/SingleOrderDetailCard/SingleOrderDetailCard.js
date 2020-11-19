@@ -20,6 +20,7 @@ class SingleOrderDetailCard extends React.Component {
       <div className="card-body">
         <p className="card-desc"> Description: {lineItem.description}</p>
         <p className="card-quantity"> Quantity: {lineItem.lineItemQuantity}</p>
+        <p className="card-quantity"> Product Total: ${lineItem.lineItemQuantity * lineItem.unitPrice}</p>
         <Link className="btn btn-dark" to={singleProductLink}> View Product <i className="fas fa-search"> </i></Link>
       </div>
       </div>

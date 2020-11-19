@@ -10,14 +10,14 @@ class UserProfile extends React.Component {
   }
 
   getUserForProfile = () => {
-    const userId = 2;
+    const userId = 3;
     UserData.getUserByUserId(userId)
       .then((resp) => this.setState({ user: resp }))
       .catch((err) => console.error('could not get user', err));
   }
 
   getUserOrderHistory = () => {
-    const userId = 2;
+    const userId = 3;
     UserData.getCompletedOrdersByUserId(userId)
       .then((resp) => this.setState({ orderHistory: resp }))
       .catch((err) => console.error('could not get completed orders for user', err));
@@ -35,9 +35,9 @@ class UserProfile extends React.Component {
 
     return (
       <div className="UserProfile col-10 offset-1">
-        <h2 class="my-3">User Profile</h2>
+        <h2 className="my-3">User Profile</h2>
           <div className="user-profile-container">
-            <h4 class="col-12 user-name">{user.firstName} {user.lastName}</h4>
+            <h4 className="col-12 user-name">{user.firstName} {user.lastName}</h4>
             <div className="user-contact-info d-flex flex-row">
               <div className="user-details col-6">
               <p><strong>Contact Info:</strong></p>

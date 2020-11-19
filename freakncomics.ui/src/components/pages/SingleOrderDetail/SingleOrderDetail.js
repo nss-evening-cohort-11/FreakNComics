@@ -30,8 +30,8 @@ class SingleOrderDetail extends React.Component {
 
   render() {
     const { lineItems } = this.state;
-    const buildSingleItem = lineItems.map((lineItem) => (
-      <SingleOrderDetailCard key={lineItem.lineItemId} lineItem={lineItem} />
+    const buildSingleItem = lineItems.map((lineItem, index) => (
+      <SingleOrderDetailCard key={index} lineItem={lineItem} />
     ));
     return (
       <div className="OrderDetail col-12">
