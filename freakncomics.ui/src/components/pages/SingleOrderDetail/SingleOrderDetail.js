@@ -1,7 +1,7 @@
-import { forEach } from 'lodash';
 import React from 'react';
 import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './SingleOrderDetail.scss';
+import SingleOrderDetailCard from '../../shared/SingleOrderDetailCard/SingleOrderDetailCard';
 
 class SingleOrderDetail extends React.Component {
   state = {
@@ -31,14 +31,15 @@ class SingleOrderDetail extends React.Component {
   render() {
     const { order, lineItems } = this.state;
     console.error(order, lineItems);
-    const buildSingleItem = lineItems.map((lineItem) => (<h3 className="Product Title text center"> {lineItem.title} </h3>));
+    const buildSingleItem = lineItems.map((lineItem) => (
+      <SingleOrderDetailCard key={lineItem.lineItemId} lineItem={lineItem} />
+    ));
     return (
-      <div className="OrderDetail col-6 offset-6">
-           Order Detail page
-        <div className="row">
-          <div className="SingleOrder-details">
+      <div className="OrderDetail col-12">
+        <h2 className="text-center"> Order Detail </h2>
+        <div className="align-item-center">
+          <div className="SingleOrder-details text-center ">
           {buildSingleItem}
-          <p> {order.total} </p>
           </div>
         </div>
       </div>
