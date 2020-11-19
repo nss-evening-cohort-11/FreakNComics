@@ -10,10 +10,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FreakNComics.Controllers
 {
-    //public abstract class FirebaseEnabledController : ControllerBase
-    //{
-    //    protected string UserId => User.FindFirst(x => x.Type == "user_id").Value;
-    //}
+    public abstract class FirebaseEnabledController : ControllerBase
+    {
+        protected string UserId => User.FindFirst(x => x.Type == "user_id").Value;
+    }
 
     [Route("api/users")]
     [ApiController]
