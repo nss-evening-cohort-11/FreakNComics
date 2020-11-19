@@ -29,7 +29,7 @@ class SingleLineItem extends React.Component {
           Unit Price:
           </h5>
           <div className="col">
-          {lineItem.unitPrice}
+          ${lineItem.unitPrice}
           </div>
          <h5>
          Quantity:

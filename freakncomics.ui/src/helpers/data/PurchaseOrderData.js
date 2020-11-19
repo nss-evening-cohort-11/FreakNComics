@@ -8,6 +8,12 @@ const addToCart = (userId, product) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getSingleOrderByOrderId = (orderId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/orders/${orderId}`)
+    .then((resp) => resolve(resp.data))
+    .catch((error) => reject(error));
+});
+
 const getLineItemsByPurchaseOrderId = (orderId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/orders/${orderId}/items`)
     .then((response) => resolve(response.data))
@@ -29,5 +35,5 @@ const getCompletePurchaseOrder = (userId) => new Promise((resolve, reject) => {
 const removeLineItem = (id, itemId) => axios.delete(`${baseUrl}/orders/${id}/items/${itemId}`);
 
 export default {
-  addToCart, getLineItemsByPurchaseOrderId, getCompletePurchaseOrder, removeLineItem, getLineItemsWithProducts,
+  addToCart, getLineItemsByPurchaseOrderId, getCompletePurchaseOrder, removeLineItem, getLineItemsWithProducts, getSingleOrderByOrderId,
 };

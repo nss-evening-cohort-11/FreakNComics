@@ -15,7 +15,7 @@ class Home extends React.Component {
       <ProductCard key={`product${product.productId}`} product={product} />
     ));
     return (
-      <div className="Home">
+      <div className="Home text-center">
         <h3> Latest Available Products </h3>
         <div className="LatestProducts d-flex flex-wrap justify-content-around">
           {buildLatestProductList}
