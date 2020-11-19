@@ -1,0 +1,18 @@
+.user-profile-container {
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
+  background-color: white;
+  border-radius: .3rem;
+  margin-bottom: 1.2rem;
+  
+  .user-name {
+    border-bottom: solid .75px gray;
+    padding-top: .7rem;
+    padding-bottom: .7rem;
+    padding-left: 1.8rem;
+    margin-bottom: 0;
+  }
+  
+  .user-contact-info {
+    padding: 1rem;
+  }
+}
