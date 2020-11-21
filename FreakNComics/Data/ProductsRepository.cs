@@ -5,15 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using FreakNComics.Models;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace FreakNComics.Data
 {
     public class ProductsRepository
     {
+        readonly string _connectionString;
 
-        static List<Products> _products = new List<Products>();
-
-        const string _connectionString = "Server=localhost;Database=FreakNComics;Trusted_Connection=True;";
+        public ProductsRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("FreakNComics");
+        }
 
         public void Add(Products productToAdd)
         {

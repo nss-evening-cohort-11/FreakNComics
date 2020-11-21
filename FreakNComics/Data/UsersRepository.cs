@@ -5,12 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using FreakNComics.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace FreakNComics.Data
 {
     public class UsersRepository
     {
-        const string _connectionString = "Server = localhost; Database = FreakNComics; Trusted_Connection = True;";
+        readonly string _connectionString;
+
+        public UsersRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("FreakNComics");
+        }
 
         public IEnumerable<User> GetAll()
         {
@@ -49,10 +55,11 @@ namespace FreakNComics.Data
                                ,[City]
                                ,[State]
                                ,[ZipCode]
+                               ,[Password]
                                ,[DateCreated])
 	                    Output inserted.id
                         VALUES
-                                (@firstname,@lastname,@email,@phone,@streetaddress,@city,@state,@zipcode,@datecreated)";
+                                (@firstname,@lastname,@email,@phone,@streetaddress,@city,@state,@zipcode,@password,@datecreated)";
 
             var newId = db.ExecuteScalar<int>(sql, userToAdd);
 
@@ -81,6 +88,7 @@ namespace FreakNComics.Data
                               ,[City] = @city
                               ,[State] = @state
                               ,[ZipCode] = @zipCode
+                              ,[Password] = @password
                               ,[DateCreated] = @dateCreated
                          OUTPUT inserted.*
                          WHERE id = @id";
@@ -97,6 +105,7 @@ namespace FreakNComics.Data
                 userToUpdate.City,
                 userToUpdate.State,
                 userToUpdate.ZipCode,
+                userToUpdate.Password,
                 userToUpdate.DateCreated,
                 id
             };

@@ -15,11 +15,11 @@ namespace FreakNComics.Controllers
     [ApiController]
     public class PaymentTypeController : ControllerBase
     {
-        PaymentTypeRepository _repo;
+        readonly PaymentTypeRepository _repo;
 
-        public PaymentTypeController()
+        public PaymentTypeController(PaymentTypeRepository repo)
         {
-            _repo = new PaymentTypeRepository();
+            _repo = repo;
         }
         // GET: api/<PaymentTypeController>
         [HttpGet]

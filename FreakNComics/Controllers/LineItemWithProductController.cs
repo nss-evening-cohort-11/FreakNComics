@@ -13,10 +13,10 @@ namespace FreakNComics.Controllers
     [ApiController]
     public class LineItemWithProductController : ControllerBase
     {
-       LineItemWithProductRepository _repo;
-        public LineItemWithProductController()
+        readonly LineItemWithProductRepository _repo;
+        public LineItemWithProductController(LineItemWithProductRepository repo)
         {
-            _repo = new LineItemWithProductRepository();
+            _repo = repo;
         }
         // GET: api/lineitemwithproduct/3/items>
         [HttpGet("{id}/items")]

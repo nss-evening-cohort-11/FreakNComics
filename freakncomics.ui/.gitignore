@@ -3,6 +3,7 @@
 .vscode/
 package-lock.json
 dist/
+src/helpers/data/apiKeys.json
 
 # dependencies
 /node_modules
