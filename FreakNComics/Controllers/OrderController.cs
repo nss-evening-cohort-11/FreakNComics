@@ -7,17 +7,19 @@ using FreakNComics.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FreakNComics.Controllers
 {
     [Route("api/orders")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
-        OrderRepository _repo;
-        public OrderController()
+        readonly OrderRepository _repo;
+        public OrderController(OrderRepository repo)
         {
-            _repo = new OrderRepository();
+            _repo = repo;
         }
 
         // PURCHASE ORDER METHODS

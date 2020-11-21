@@ -15,11 +15,11 @@ namespace FreakNComics.Controllers
     public class ProductTypeController : ControllerBase
     {
 
-        ProductTypeRepository _repo;
+        readonly ProductTypeRepository _repo;
 
-        public ProductTypeController()
+        public ProductTypeController(ProductTypeRepository repo)
         {
-            _repo = new ProductTypeRepository();
+            _repo = repo;
         }
 
         // GET: api/<ProductTypeController>

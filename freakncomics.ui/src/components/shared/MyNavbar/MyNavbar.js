@@ -1,5 +1,7 @@
 import React from 'react';
 import './MyNavbar.scss';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { withRouter, NavLink as RRNavLink } from 'react-router-dom';
 import { NavLink } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -37,7 +39,7 @@ class MyNavbar extends React.Component {
 
   render() {
     return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <NavLink className="navbar-brand" tag={RRNavLink} to="/">Freak 'N Comics</NavLink>
 
       <button
@@ -62,6 +64,9 @@ class MyNavbar extends React.Component {
           </li>
           <li className="nav-item">
             <NavLink tag={RRNavLink} to="/shopping-cart">Cart</NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink tag={RRNavLink} to="/register">Register</NavLink>
           </li>
           <li className="nav-item">
             <ProductCategoriesCollapse/>

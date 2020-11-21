@@ -16,6 +16,7 @@ namespace FreakNComics.Models
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
+        public string Password { get; set; }
         public DateTime DateCreated { get; set; }
     }
 }

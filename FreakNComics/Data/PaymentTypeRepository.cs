@@ -5,14 +5,18 @@ using System.Threading.Tasks;
 using Dapper;
 using FreakNComics.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace FreakNComics.Data
 {
     public class PaymentTypeRepository
     {
-        static List<PaymentType> _PaymentType = new List<PaymentType>();
+        readonly string _connectionString;
 
-        const string _connectionString = "Server=localhost;Database=FreakNComics;Trusted_Connection=True;";
+        public PaymentTypeRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("FreakNComics");
+        }
 
         public void Add(PaymentType paymentTypeToAdd)
         {

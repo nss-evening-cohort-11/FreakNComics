@@ -6,18 +6,24 @@ using FreakNComics.Data;
 using FreakNComics.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FreakNComics.Controllers
 {
+    public abstract class FirebaseEnabledController : ControllerBase
+    {
+        protected string UserId => User.FindFirst(x => x.Type == "user_id").Value;
+    }
+
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        UsersRepository _repo;
+        readonly UsersRepository _repo;
 
-        public UsersController()
+        public UsersController(UsersRepository repo)
         {
-            _repo = new UsersRepository();
+            _repo = repo;
         }
 
         [HttpGet]
