@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './ShoppingCart.scss';
 import SingleLineItem from '../../SingleLineItem/SingleLineItem';
@@ -42,14 +43,22 @@ render() {
   ));
 
   return (
-      <div className="lineItems container mt-5">
+      <div className="lineItems flex-column align-items-center d-flex flex-wrap container mt-5">
         <h2 className="shopping-cart d-flex flex-wrap justify-content-around mt-5 mb-3">
           Your Cart:
         </h2>
-      {buildLineItems}
-        <h3 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
-          Your Total:
+      <div className="flex-column col-6"> {buildLineItems} </div>
+      <Link className="col-1 continue-shopping-btn btn btn-dark align-items-center mt-3" to={'/'}> Continue Shopping</Link>
+        <h4 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+          Subtotal:
         $ {activeOrder.total}
+        </h4>
+        <h4 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+          Tax: {(activeOrder.total * 0.0925).toFixed(2, 2)}
+        </h4>
+        <h3 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+        Your Total:
+        $ {((activeOrder.total * 0.0925) + (activeOrder.total)).toFixed(2, 2)}
         </h3>
       </div>
   );

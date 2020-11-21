@@ -1,0 +1,12 @@
+{
+  "firebaseKeys": {
+    "apiKey": "AIzaSyDjTmpJ1tmpxuiy6Jo-HnVbXjy6aAuGKQQ",
+    "authDomain": "freakncomics-a8ee0.firebaseapp.com",
+    "databaseURL": "https://freakncomics-a8ee0.firebaseio.com",
+    "projectId": "freakncomics-a8ee0",
+    "storageBucket": "freakncomics-a8ee0.appspot.com",
+    "messagingSenderId": "186051763335",
+    "appId": "1:186051763335:web:7280b7c6e57d0a3797ec22",
+    "measurementId": "G-1V5S6NWXJZ"
+  }
+}
