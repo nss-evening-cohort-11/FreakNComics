@@ -49,14 +49,14 @@ render() {
         </h2>
       <div className="flex-column col-6"> {buildLineItems} </div>
       <Link className="col-1 continue-shopping-btn btn btn-dark align-items-center mt-3" to={'/'}> Continue Shopping</Link>
-        <h4 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+        <h4 className="d-flex flex-wrap justify-content-around mt-2 mb-1">
           Subtotal:
         $ {activeOrder.total}
         </h4>
-        <h4 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
-          Tax: {(activeOrder.total * 0.0925).toFixed(2, 2)}
+        <h4 className="d-flex flex-wrap justify-content-around mt-1 mb-1">
+         Tax:  $ {(activeOrder.total * 0.0925).toFixed(2, 2)}
         </h4>
-        <h3 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+        <h3 className="d-flex flex-wrap justify-content-around mt-1 mb-3">
         Your Total:
         $ {((activeOrder.total * 0.0925) + (activeOrder.total)).toFixed(2, 2)}
         </h3>
