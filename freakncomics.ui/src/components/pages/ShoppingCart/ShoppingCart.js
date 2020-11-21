@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './ShoppingCart.scss';
 import SingleLineItem from '../../SingleLineItem/SingleLineItem';
+
 
 class ShoppingCart extends React.Component {
     state = {
@@ -47,9 +49,17 @@ render() {
           Your Cart:
         </h2>
       {buildLineItems}
-        <h3 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
-          Your Total:
+      <Link className="col-1 continue-shopping-btn btn btn-dark" to={`/`}> Continue Shopping</Link>
+        <h4 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+          Subtotal:
         $ {activeOrder.total}
+        </h4>
+        <h4 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+          Tax: {(activeOrder.total * 0.0925).toFixed(2, 2)}
+        </h4>
+        <h3 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
+        Your Total:
+        $ {((activeOrder.total * 0.0925) + (activeOrder.total)).toFixed(2, 2)}
         </h3>
       </div>
   );
