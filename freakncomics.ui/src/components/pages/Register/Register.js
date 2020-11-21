@@ -1,6 +1,7 @@
 import React from 'react';
 import './Register.scss';
 
+import { parseInt } from 'lodash';
 import AuthData from '../../../helpers/data/AuthData';
 
 class Register extends React.Component {
@@ -14,7 +15,7 @@ class Register extends React.Component {
       StreetAddress: '',
       City: '',
       State: '',
-      ZipCode: '',
+      ZipCode: 0,
       DateCreated: '',
     },
     states: 'AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY',
@@ -23,7 +24,7 @@ class Register extends React.Component {
   componentDidMount() {
     const temp = { ...this.state.User };
     const d = new Date();
-    temp.DateCreated = d.toISOString().slice(0, 19).replace('T', ' ');
+    temp.DateCreated = d.toISOString();
     this.setState({ User: temp });
   }
 
@@ -65,7 +66,7 @@ class Register extends React.Component {
         })
         .catch((err) => console.error('could not register user', err));
     } else {
-      // not ready
+      window.alert('You are missing an input');
     }
   }
 
@@ -116,7 +117,7 @@ class Register extends React.Component {
     const temp = { ...this.state.User };
     const re = /^[0-9\b]+$/;
     if (e.target.value === '' || re.test(e.target.value)) {
-      temp.ZipCode = e.target.value;
+      temp.ZipCode = parseInt(e.target.value);
       this.setState({ User: temp });
     }
   }
@@ -163,7 +164,7 @@ class Register extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="userPassword">Create Password</label>
-          <input onChange={this.onPasswordChange} type="password" className="form-control col-6" id="userPassword" placeholder="Password"/>
+          <input onChange={this.onPasswordChange} maxLength="30" type="password" className="form-control col-6" id="userPassword" placeholder="Password"/>
         </div>
         <div>
           <label htmlFor="inputAddress">Address</label>

@@ -55,10 +55,11 @@ namespace FreakNComics.Data
                                ,[City]
                                ,[State]
                                ,[ZipCode]
+                               ,[Password]
                                ,[DateCreated])
 	                    Output inserted.id
                         VALUES
-                                (@firstname,@lastname,@email,@phone,@streetaddress,@city,@state,@zipcode,@datecreated)";
+                                (@firstname,@lastname,@email,@phone,@streetaddress,@city,@state,@zipcode,@password,@datecreated)";
 
             var newId = db.ExecuteScalar<int>(sql, userToAdd);
 
@@ -87,6 +88,7 @@ namespace FreakNComics.Data
                               ,[City] = @city
                               ,[State] = @state
                               ,[ZipCode] = @zipCode
+                              ,[Password] = @password
                               ,[DateCreated] = @dateCreated
                          OUTPUT inserted.*
                          WHERE id = @id";
@@ -103,6 +105,7 @@ namespace FreakNComics.Data
                 userToUpdate.City,
                 userToUpdate.State,
                 userToUpdate.ZipCode,
+                userToUpdate.Password,
                 userToUpdate.DateCreated,
                 id
             };
