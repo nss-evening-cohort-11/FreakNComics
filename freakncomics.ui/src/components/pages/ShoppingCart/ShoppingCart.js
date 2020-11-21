@@ -4,7 +4,6 @@ import PurchaseOrderData from '../../../helpers/data/PurchaseOrderData';
 import './ShoppingCart.scss';
 import SingleLineItem from '../../SingleLineItem/SingleLineItem';
 
-
 class ShoppingCart extends React.Component {
     state = {
       activeOrder: {},
@@ -44,12 +43,12 @@ render() {
   ));
 
   return (
-      <div className="lineItems container mt-5">
+      <div className="lineItems flex-column align-items-center d-flex flex-wrap container mt-5">
         <h2 className="shopping-cart d-flex flex-wrap justify-content-around mt-5 mb-3">
           Your Cart:
         </h2>
-      {buildLineItems}
-      <Link className="col-1 continue-shopping-btn btn btn-dark" to={`/`}> Continue Shopping</Link>
+      <div className="flex-column col-6"> {buildLineItems} </div>
+      <Link className="col-1 continue-shopping-btn btn btn-dark align-items-center mt-3" to={'/'}> Continue Shopping</Link>
         <h4 className="d-flex flex-wrap justify-content-around mt-5 mb-3">
           Subtotal:
         $ {activeOrder.total}

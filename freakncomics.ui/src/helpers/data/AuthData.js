@@ -1,9 +1,6 @@
 import firebase from 'firebase';
 import axios from 'axios';
-import firebaseConfig from './apiKeys.json';
 import constants from './constants.json';
-
-const baseUrl = firebaseConfig.firebaseKeys.databaseURL;
 
 // interceptors work by changing the outbound request before the xhr is sent
 // or by changing the response before it's returned to our .then() method.
@@ -51,6 +48,7 @@ const logoutUser = () => firebase.auth().signOut();
 
 const getUid = () => firebase.auth().currentUser.uid;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getUid, loginUser, logoutUser, registerUser,
 };
